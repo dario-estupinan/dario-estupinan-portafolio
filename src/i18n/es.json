@@ -1,0 +1,364 @@
+{
+  "sitio": {
+    "nombre": "Darío Estupiñán",
+    "titulo": "Darío Estupiñán · Desarrollador de software en Guayaquil",
+    "descripcion": "Sitios web, tableros de datos y software a medida para negocios. Guayaquil, Ecuador.",
+    "saltar": "Saltar al contenido",
+    "otraLengua": "English",
+    "otraLenguaCorta": "EN",
+    "whatsapp": "Hola, Darío. Vi tu portafolio y quiero conversar sobre un proyecto."
+  },
+  "mascota": {
+    "etiqueta": "Mascota dibujada con letras",
+    "cambiar": "Cambiar mascota",
+    "nombres": {
+      "datos": "Ing. de datos",
+      "gato": "Gato",
+      "ojo": "Ojo"
+    }
+  },
+  "nav": {
+    "etiqueta": "Principal",
+    "enlaces": [
+      [
+        "servicios",
+        "Servicios"
+      ],
+      [
+        "trabajos",
+        "Trabajos"
+      ],
+      [
+        "datos",
+        "Datos"
+      ],
+      [
+        "protocolo",
+        "Protocolo"
+      ],
+      [
+        "sobre-mi",
+        "Sobre mí"
+      ]
+    ],
+    "boton": "Hablemos",
+    "menu": "Menú",
+    "cerrar": "Cerrar"
+  },
+  "bienvenida": {
+    "pasos": [
+      "Cargando las letras",
+      "Dibujando la mascota con 2.604 letras",
+      "Midiendo el contraste",
+      "Listo"
+    ],
+    "saltar": "Toca para entrar"
+  },
+  "portada": {
+    "ficha": [
+      "N.º 01 — Portada",
+      "Guayaquil 02°11′S 79°53′O",
+      "HEX #22308F"
+    ],
+    "h1": {
+      "antes": "Hago",
+      "a": "sitios web",
+      "b": "tableros de datos",
+      "y": "y",
+      "c": "software a medida"
+    },
+    "parrafo": "Soy Darío Estupiñán, desarrollador de software en Guayaquil. Trabajo con negocios que necesitan que los encuentren, entender sus números o dejar de hacer a mano lo que puede hacer un sistema.",
+    "boton": "Agenda una primera conversación",
+    "lista": [
+      [
+        "Sitios web",
+        "Rápidos y fáciles de encontrar"
+      ],
+      [
+        "Tableros de datos",
+        "Power BI"
+      ],
+      [
+        "Software a medida",
+        "Hecho para tu operación"
+      ]
+    ],
+    "cinta": [
+      "Webs",
+      "Datos",
+      "Software"
+    ],
+    "pausa": "Pausa",
+    "mover": "Mover"
+  },
+  "servicios": {
+    "ficha": "N.º 02 — Servicios",
+    "palabra": "Servicios",
+    "titulo": "Tres servicios, una misma forma de trabajar",
+    "entrego": "Qué entrego",
+    "serie": "Viene de serie",
+    "ejemplo": "Ejemplo",
+    "items": [
+      {
+        "nombre": "Sitios web",
+        "desc": "Sitios que cargan rápido, se leen bien en el celular y dicen con claridad qué hace tu negocio.",
+        "entrego": [
+          "Diseño propio, no una plantilla repetida",
+          "Versión para celular probada desde 360 px",
+          "Tus textos y tus fotos, en su sitio",
+          "Manual para actualizarlo"
+        ],
+        "serie": [
+          "Texto real que leen personas, buscadores y asistentes de IA",
+          "Datos del negocio marcados para máquinas",
+          "Carga rápida, medida",
+          "Una página por servicio y preguntas frecuentes"
+        ],
+        "ejemplo": "NPC Guayaquil Muscle Show",
+        "ancla": "trabajos"
+      },
+      {
+        "nombre": "Tableros de datos",
+        "desc": "Tus ventas, tu nómina o tu operación en una pantalla que se entiende sin ser analista.",
+        "entrego": [
+          "Modelo de datos ordenado",
+          "Indicadores acordados contigo",
+          "Tablero en Power BI con filtros",
+          "Cifras de control para comprobar que cuadra"
+        ],
+        "serie": [
+          "Datos ordenados y con nombres claros",
+          "Definición escrita de cada indicador",
+          "La base que necesita cualquier herramienta de IA para trabajar con tu negocio"
+        ],
+        "ejemplo": "Tablero de nómina (demostración)",
+        "ancla": "datos"
+      },
+      {
+        "nombre": "Software a medida",
+        "desc": "Un sistema hecho para tu forma de trabajar: registros, accesos, reportes y automatizaciones.",
+        "entrego": [
+          "Levantamiento de tu proceso actual",
+          "Sistema web con usuarios y permisos",
+          "Pruebas antes de publicar",
+          "Manual y capacitación"
+        ],
+        "serie": [
+          "Datos estructurados desde el primer día",
+          "Exportación de tu información",
+          "Documentación de uso"
+        ],
+        "ejemplo": "Acceso por QR de NPC Guayaquil Muscle Show",
+        "ancla": "trabajos"
+      }
+    ]
+  },
+  "ia": {
+    "ficha": "N.º 03 — Presencia en inteligencia artificial",
+    "titulo": "Que un asistente de IA sepa describir tu negocio",
+    "frase": "Un asistente de IA responde con lo que puede leer. Si tu sitio no lo dice claro, no tiene de dónde sacarlo.",
+    "pregunta": "¿Quién hace tortas por encargo en Urdesa?",
+    "sin": {
+      "titulo": "Sin esto",
+      "respuesta": "No encuentro información suficiente sobre un negocio así en esa zona."
+    },
+    "con": {
+      "titulo": "Con esto",
+      "respuesta": "Horno Lento hace tortas por encargo en Urdesa, Guayaquil. Atiende de martes a domingo y recibe pedidos por WhatsApp."
+    },
+    "ilustracion": "Ilustración: respuesta simulada con un negocio ficticio.",
+    "incluido": "Lo que ya viene incluido",
+    "lista": [
+      [
+        "Texto real",
+        "Lo que tu negocio hace, dónde y cuándo, escrito en la página y no dentro de una imagen."
+      ],
+      [
+        "Datos marcados para máquinas",
+        "Nombre, dirección, horarios y servicios en el formato que leen buscadores y asistentes."
+      ],
+      [
+        "Carga rápida",
+        "Un sitio lento se lee a medias, por personas y por rastreadores."
+      ],
+      [
+        "Una página por servicio",
+        "Cada cosa que ofreces tiene su propia dirección y su propia explicación."
+      ],
+      [
+        "Preguntas frecuentes",
+        "Las dudas reales de tus clientes, respondidas con tus palabras."
+      ]
+    ],
+    "asistente": "Asistente de IA",
+    "modos": "Comparar la respuesta"
+  },
+  "trabajos": {
+    "ficha": "N.º 04 — Trabajos",
+    "titulo": "Trabajos",
+    "entrada": "Nueve trabajos de 2026. Cuatro tienen su caso contado completo: qué se necesitaba, qué hice y con qué.",
+    "movil": "en celular",
+    "caso": "Ver el caso",
+    "sitio": "Ver el sitio",
+    "repo": "Ver el repositorio",
+    "construccion": "En construcción",
+    "volver": "Volver a los trabajos",
+    "necesidad": "Qué se necesitaba",
+    "hecho": "Qué hice",
+    "con": "Con qué",
+    "capturaDe": "Captura de"
+  },
+  "datos": {
+    "ficha": "N.º 05 — Datos",
+    "titulo": "Tus números, en una pantalla",
+    "intro": "Así se ve una nómina cuando deja de vivir en hojas sueltas. Toca las pestañas.",
+    "aviso": "Datos de demostración: cifras inventadas",
+    "pestanas": {
+      "resumen": "Resumen",
+      "horas": "Horas",
+      "rotacion": "Rotación",
+      "vacaciones": "Vacaciones"
+    },
+    "mes": "Mes",
+    "tabla": "Ver los datos en tabla",
+    "area": "Área"
+  },
+  "protocolo": {
+    "ficha": "N.º 06 — Protocolo",
+    "titulo": "Qué pasa después de escribirme",
+    "paso": "Paso",
+    "pasos": [
+      [
+        "Primer contacto",
+        "Me escribes por WhatsApp o por correo y me cuentas qué necesitas. Respondo en una hora en horario laboral.",
+        "Una mano escribe un mensaje en el celular"
+      ],
+      [
+        "Evaluación de necesidades",
+        "Te hago unas preguntas cortas sobre tu negocio, tus clientes y lo que hoy te quita tiempo.",
+        "Una persona toma notas en un cuaderno"
+      ],
+      [
+        "Reunión agendada",
+        "Conversamos por videollamada o en persona, con tus respuestas ya leídas.",
+        "Varias personas conversan en una mesa con una laptop"
+      ],
+      [
+        "Propuesta escrita",
+        "Recibes un documento con el alcance, el plazo y el precio.",
+        "Una persona revisa un documento con un bolígrafo"
+      ],
+      [
+        "Desarrollo con avances visibles",
+        "Ves el trabajo en un enlace de vista previa mientras avanza y opinas antes de que esté terminado.",
+        "Una laptop con código en pantalla"
+      ],
+      [
+        "Entrega con capacitación y manual",
+        "Publico, te enseño a usarlo y te dejo un manual escrito para tu equipo.",
+        "Dos personas repasan un documento junto a una laptop"
+      ],
+      [
+        "Acompañamiento",
+        "Sigo disponible después de la entrega para ajustes y dudas.",
+        "Una persona atiende una llamada"
+      ]
+    ]
+  },
+  "sobre": {
+    "ficha": "N.º 07 — Sobre mí",
+    "titulo": "Sobre mí",
+    "bio": [
+      "Soy desarrollador de software en Guayaquil, Ecuador, y termino Ingeniería en Sistemas de Información en la Universidad de Guayaquil.",
+      "Mido la causa antes de tocar el código, publico pasando por pruebas y escribo el manual que el usuario sí va a leer."
+    ],
+    "fotoAlt": "Retrato de Darío Estupiñán",
+    "experiencia": "Experiencia y estudios",
+    "linea": [
+      [
+        "2026 – hoy",
+        "Desarrollador de software",
+        "VIAXPERTA S.A."
+      ],
+      [
+        "2024 – 2026",
+        "Técnico de operaciones y administrador de sistemas",
+        "Limitless Ocean Cargo (LOCSA S.A.)"
+      ],
+      [
+        "2022 – 2023",
+        "Asistente administrativo y de sistemas",
+        "Ecuadorian International Transport"
+      ],
+      [
+        "Egreso estimado: 2027",
+        "Ingeniería en Sistemas de Información",
+        "Universidad de Guayaquil"
+      ]
+    ],
+    "herramientasTitulo": "Herramientas",
+    "herramientas": [
+      "C# y .NET",
+      "SQL Server",
+      "TypeScript",
+      "Astro",
+      "Next.js",
+      "Laravel",
+      "WordPress",
+      "Power BI",
+      "n8n",
+      "PostgreSQL"
+    ],
+    "cv": "Descargar CV",
+    "sello": "Disponible para proyectos · Guayaquil · ",
+    "selloPausa": "Detener el sello",
+    "selloMover": "Girar el sello"
+  },
+  "preguntas": {
+    "ficha": "N.º 08 — Preguntas frecuentes",
+    "titulo": "Preguntas frecuentes",
+    "lista": [
+      [
+        "¿Cuánto tarda un proyecto?",
+        "Depende del alcance. El plazo va escrito en la propuesta antes de empezar, y ves avances mientras se construye."
+      ],
+      [
+        "¿Qué necesito tener para empezar?",
+        "Una idea de lo que quieres lograr. Textos, fotos, dominio y lo demás se resuelven en la evaluación de necesidades."
+      ],
+      [
+        "¿Cuánto cuesta?",
+        "Cada negocio es distinto, así que no hay una tarifa fija. Después de la evaluación recibes una propuesta escrita."
+      ],
+      [
+        "¿Qué accesos recibo cuando se termina?",
+        "Recibes los accesos que necesitas para usar y actualizar tu sitio o sistema (por ejemplo, el panel de administración) y su manual. Cómo se manejan el alojamiento y el dominio depende de cada proyecto, y queda escrito en la propuesta antes de empezar."
+      ],
+      [
+        "¿Trabajas con negocios fuera de Guayaquil?",
+        "Sí. Todo el proceso se puede hacer a distancia."
+      ],
+      [
+        "¿Qué pasa después de la entrega?",
+        "Sigo disponible para ajustes y dudas. Lo que incluye ese acompañamiento queda escrito en la propuesta."
+      ]
+    ]
+  },
+  "contacto": {
+    "ficha": "N.º 09 — Contacto",
+    "titulo": "Hablemos",
+    "texto": "Cuéntame qué necesita tu negocio. Respondo en una hora en horario laboral.",
+    "whatsapp": "Escríbeme por WhatsApp",
+    "correo": "Correo",
+    "cinta": [
+      "Hablemos",
+      "Webs",
+      "Datos",
+      "Software"
+    ]
+  },
+  "pie": {
+    "derechos": "© 2026 Darío Estupiñán · Guayaquil, Ecuador",
+    "arriba": "Volver arriba"
+  }
+}

@@ -1,0 +1,39 @@
+---
+import { usarTextos } from '../i18n/textos.js';
+// Palabras gigantes que corren, con capturas inclinadas entre ellas. capturas: [{ src, alt }]
+const { lang, palabras, capturas = [], color = 'coral' } = Astro.props;
+const t = usarTextos(lang).portada;
+const piezas = palabras.map((p, i) => ({ p, c: capturas.length ? capturas[i % capturas.length] : null }));
+---
+<div class="cinta" data-cinta data-corre data-color={color}>
+  <div class="pista" data-pista>
+    {[0, 1].map(copia => (
+      <div class="tramo" aria-hidden={copia ? 'true' : undefined}>
+        {piezas.map(({ p, c }) => (
+          <>
+            <b>{p}</b>
+            {c && <img src={c.src} alt={copia ? '' : c.alt} width="320" height="200" loading="lazy" decoding="async" />}
+          </>
+        ))}
+      </div>
+    ))}
+  </div>
+  <button type="button" class="pausa rotulo" data-pausa aria-pressed="false" data-pausa-texto={t.pausa} data-mover-texto={t.mover}>{t.pausa}</button>
+</div>
+
+<script>
+  import '../scripts/cinta.js';
+</script>
+
+<style>
+  .cinta { background: var(--fondo); color: var(--texto); position: relative; overflow: hidden; padding: clamp(.8rem, 2vw, 1.6rem) 0; }
+  .pista { display: flex; width: max-content; animation: corre 32s linear infinite; }
+  .pista[data-quieta] { animation-play-state: paused; }
+  .tramo { display: flex; align-items: center; gap: clamp(1rem, 3vw, 3rem); padding-right: clamp(1rem, 3vw, 3rem); }
+  b { font-size: var(--t-gigante); font-weight: 800; font-stretch: 75%; text-transform: uppercase; line-height: .85; letter-spacing: -.02em; white-space: nowrap; }
+  .tramo b:nth-of-type(even) { color: transparent; -webkit-text-stroke: 2px var(--texto); }
+  img { height: clamp(3.2rem, 9vw, 7.5rem); width: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; rotate: -6deg; outline: 2px solid var(--texto); flex: none; }
+  .tramo img:nth-of-type(even) { rotate: 5deg; }
+  @keyframes corre { to { translate: -50% 0; } }
+  .pausa { position: absolute; right: .8rem; bottom: .8rem; min-width: 2.75rem; min-height: 2.75rem; padding: 0 .9rem; background: var(--texto); color: var(--fondo); border: 0; font-weight: 700; cursor: pointer; }
+</style>

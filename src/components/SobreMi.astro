@@ -1,0 +1,86 @@
+---
+import { usarTextos } from '../i18n/textos.js';
+// cv: ruta del archivo que se descarga. Mientras Darío no elija cuál publicar, el botón no aparece.
+const { lang, cv = null } = Astro.props;
+const t = usarTextos(lang).sobre;
+---
+<section id="sobre-mi" class="franja" data-color="cobalto">
+  <div class="rejilla">
+    <div class="retrato">
+      <div class="encuadre">
+        <div class="duo"><img src="/img/dario-duotono.webp" alt={t.fotoAlt} width="800" height="1000" loading="lazy" decoding="async" /></div>
+      </div>
+      <div class="sello-caja">
+        <svg class="sello" data-sello viewBox="0 0 200 200" aria-hidden="true">
+          <defs><path id="aro-sello" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0" /></defs>
+          <circle cx="100" cy="100" r="98" />
+          <text><textPath href="#aro-sello" textLength="470">{t.sello}{t.sello}</textPath></text>
+          <rect x="72" y="104" width="12" height="22" /><rect x="94" y="88" width="12" height="38" /><rect x="116" y="74" width="12" height="52" />
+        </svg>
+        <button type="button" class="rotulo" data-sello-pausa aria-pressed="false" data-pausa-texto={t.selloPausa} data-mover-texto={t.selloMover}>{t.selloPausa}</button>
+      </div>
+    </div>
+
+    <div class="texto">
+      <p class="rotulo ficha"><span>{t.ficha}</span></p>
+      <h2 class="titulo-seccion">{t.titulo}</h2>
+      {t.bio.map((p, i) => <p class={i ? 'bio' : 'entrada'}>{p}</p>)}
+
+      <h3 class="rotulo">{t.experiencia}</h3>
+      <ol class="linea" role="list">
+        {t.linea.map(([cuando, cargo, lugar]) => <li><span class="rotulo">{cuando}</span><b>{cargo}</b><span>{lugar}</span></li>)}
+      </ol>
+
+      <h3 class="rotulo">{t.herramientasTitulo}</h3>
+      <p class="herramientas">{t.herramientas.join(' · ')}</p>
+
+      {cv && <a class="boton" href={cv} download>{t.cv} <span aria-hidden="true">↓</span></a>}
+    </div>
+  </div>
+</section>
+
+<script>
+  const calmado = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for (const boton of document.querySelectorAll('[data-sello-pausa]')) {
+    const sello = boton.parentElement.querySelector('[data-sello]');
+    const poner = quieto => {
+      sello.toggleAttribute('data-quieto', quieto);
+      boton.setAttribute('aria-pressed', String(quieto));
+      boton.textContent = quieto ? boton.dataset.moverTexto : boton.dataset.pausaTexto;
+    };
+    poner(calmado);
+    boton.addEventListener('click', () => poner(!sello.hasAttribute('data-quieto')));
+  }
+</script>
+
+<style>
+  .rejilla { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(1.5rem, 5vw, 5rem); align-items: start; }
+  .retrato { position: relative; max-width: 26rem; }
+  .retrato img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+  /* Duotono por CSS: las luces toman el lila y las sombras el cobalto, sin regenerar la foto. */
+  .duo { position: relative; isolation: isolate; background: var(--lila); }
+  .duo::after { content: ""; position: absolute; inset: 0; background: var(--cobalto); mix-blend-mode: lighten; pointer-events: none; }
+  .sello-caja { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; }
+  .sello { width: clamp(6rem, 12vw, 8.5rem); flex: none; animation: gira 22s linear infinite; }
+  .sello[data-quieto] { animation-play-state: paused; }
+  .sello circle { fill: var(--acento); }
+  .sello text { font-family: var(--f-mono); font-size: 15px; font-weight: 700; fill: var(--sobre); text-transform: uppercase; }
+  .sello rect { fill: var(--sobre); }
+  @keyframes gira { to { rotate: 1turn; } }
+  .sello-caja button { min-height: 2.75rem; padding: 0 .9rem; background: none; border: 1.5px solid; cursor: pointer; text-align: left; }
+  .entrada { margin-top: 1.4rem; }
+  .bio { margin-top: 1rem; max-width: 52ch; }
+  h3 { margin: 2.4rem 0 .7rem; color: var(--acento); }
+  .linea { border-top: 1.5px solid; }
+  .linea li { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: .1rem 1.5rem; padding: .8rem 0; border-bottom: 1.5px solid; align-items: baseline; }
+  .linea b { font-weight: 800; font-size: 1.15rem; line-height: 1.2; }
+  .linea li span:last-child { grid-column: 2; }
+  .herramientas { font-family: var(--f-mono); font-size: .85rem; line-height: 1.9; max-width: 60ch; }
+  .boton { margin-top: 2rem; }
+  @media (max-width: 47.99rem) {
+    .rejilla { grid-template-columns: minmax(0, 1fr); }
+    .retrato { max-width: 18rem; }
+    .linea li { grid-template-columns: minmax(0, 1fr); }
+    .linea li span:last-child { grid-column: 1; }
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+import { usarTextos } from '../i18n/textos.js';
+const t = usarTextos(Astro.props.lang).ia;
+const palabras = t.frase.split(' ');
+---
+<section id="ia" class="franja ia" data-color="tinta">
+  <div class="lado">
+    <p class="rotulo ficha"><span>{t.ficha}</span></p>
+    <h2 class="titulo-seccion">{t.titulo}</h2>
+    <p class="frase" data-frase>{palabras.map(p => <><span>{p}</span>{' '}</>)}</p>
+  </div>
+
+  <!-- Sin JavaScript se lee el caso «con esto» completo; con JavaScript se escribe solo al entrar en pantalla. -->
+  <figure class="agente" data-agente data-modo="con">
+    <div class="barra">
+      <p class="rotulo"><span class="punto" aria-hidden="true"></span>{t.asistente}</p>
+      <div class="modos" role="group" aria-label={t.modos} data-modos hidden>
+        <button type="button" data-ver="sin" aria-pressed="false">{t.sin.titulo}</button>
+        <button type="button" data-ver="con" aria-pressed="true">{t.con.titulo}</button>
+      </div>
+    </div>
+    <!-- Los textos «fantasma» reservan el alto para que nada salte mientras se escribe. -->
+    <p class="pregunta pila"><span class="fantasma" aria-hidden="true">&gt; {t.pregunta}</span><span>&gt; <span data-pregunta>{t.pregunta}</span></span></p>
+    <p class="rotulo">{t.incluido}</p>
+    <ul class="lee" role="list">{t.lista.map(([nombre]) => <li data-leido>{nombre}</li>)}</ul>
+    <p class="respuesta pila">
+      <span class="fantasma" aria-hidden="true" data-texto="sin">{t.sin.respuesta}</span>
+      <span class="fantasma" aria-hidden="true" data-texto="con">{t.con.respuesta}</span>
+      <span data-respuesta>{t.con.respuesta}</span>
+    </p>
+    <figcaption class="rotulo" data-ilustracion>{t.ilustracion}</figcaption>
+  </figure>
+</section>
+
+<script>
+  // Cada palabra recibe su posición (0 a 1) para encenderse en orden con el scroll.
+  for (const frase of document.querySelectorAll('[data-frase]')) {
+    const palabras = frase.querySelectorAll('span');
+    palabras.forEach((p, i) => p.style.setProperty('--p', String(i / palabras.length)));
+  }
+
+  // Asistente simulado: escribe la pregunta, revisa qué puede leer y responde. Corre una vez al entrar en pantalla
+  // (primero «sin», luego «con») y después solo cuando se toca un botón. Con movimiento reducido cambia sin escribir.
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)');
+  const espera = ms => new Promise(r => setTimeout(r, ms));
+  for (const fig of document.querySelectorAll('[data-agente]')) {
+    const pregunta = fig.querySelector('[data-pregunta]'), respuesta = fig.querySelector('[data-respuesta]');
+    const fichas = [...fig.querySelectorAll('.lee li')], botones = [...fig.querySelectorAll('[data-ver]')];
+    const textoPregunta = pregunta.textContent, texto = modo => fig.querySelector(`[data-texto="${modo}"]`).textContent;
+    let turno = 0;
+    const ver = async (modo, animar) => {
+      const yo = ++turno, sigo = () => yo === turno;
+      fig.dataset.modo = modo;
+      for (const b of botones) b.setAttribute('aria-pressed', String(b.dataset.ver === modo));
+      if (!animar) { pregunta.textContent = textoPregunta; respuesta.textContent = texto(modo); fichas.forEach(f => f.setAttribute('data-leido', '')); return true; }
+      pregunta.textContent = respuesta.textContent = '';
+      fichas.forEach(f => f.removeAttribute('data-leido'));
+      for (const letra of textoPregunta) { pregunta.textContent += letra; await espera(22); if (!sigo()) return false; }
+      for (const f of fichas) { await espera(240); if (!sigo()) return false; f.setAttribute('data-leido', ''); }
+      await espera(300);
+      for (const palabra of texto(modo).split(' ')) { if (!sigo()) return false; respuesta.textContent += (respuesta.textContent ? ' ' : '') + palabra; await espera(70); }
+      return true;
+    };
+    fig.querySelector('[data-modos]').hidden = false;
+    for (const b of botones) b.addEventListener('click', () => ver(b.dataset.ver, !quieto.matches));
+    new IntersectionObserver(async ([e], obs) => {
+      if (!e.isIntersecting) return;
+      obs.disconnect();
+      if (quieto.matches) return;
+      if (await ver('sin', true)) { await espera(1600); if (turno === 1) ver('con', true); }
+    }, { threshold: .5 }).observe(fig);
+  }
+</script>
+
+<style>
+  .ia { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+  .frase { font-size: clamp(1.5rem, 1rem + 2vw, 2.6rem); line-height: 1.1; letter-spacing: -.025em; font-weight: 700; font-stretch: 88%; max-width: 22ch; margin-top: clamp(1.5rem, 3vw, 2.5rem); text-wrap: balance; }
+  @keyframes enciende { from { opacity: .22; } to { opacity: 1; } }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .frase { view-timeline: --frase block; }
+      .frase span { animation: enciende linear both; animation-timeline: --frase; animation-range: cover calc(10% + var(--p, 0) * 22%) cover calc(18% + var(--p, 0) * 22%); }
+    }
+  }
+
+  .agente { display: grid; gap: 1.1rem; padding: clamp(1.2rem, 2.5vw, 2rem); border-radius: var(--radio); border: 1.5px solid color-mix(in srgb, var(--texto) 35%, transparent); transition: background-color .4s, color .4s, border-color .4s; }
+  .agente[data-modo="con"] { background: var(--acento); color: var(--sobre); border-color: var(--acento); }
+  .barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; }
+  .punto { display: inline-block; width: .6rem; height: .6rem; margin-right: .6rem; border-radius: 50%; background: var(--coral); }
+  .agente[data-modo="con"] .punto { background: var(--cobalto); }
+  .modos { display: flex; gap: .4rem; }
+  .modos button { min-height: 2.75rem; padding: .5rem 1rem; border: 1.5px solid currentColor; border-radius: 99rem; background: none; font-weight: 700; cursor: pointer; }
+  .modos button[aria-pressed="true"] { background: var(--tinta); color: var(--lila); border-color: var(--tinta); }
+  .agente[data-modo="sin"] .modos button[aria-pressed="true"] { background: var(--lila); color: var(--tinta); border-color: var(--lila); }
+  .pila { display: grid; }
+  .pila > * { grid-area: 1 / 1; }
+  .fantasma { visibility: hidden; }
+  .pregunta { font-family: var(--f-mono); font-size: .85rem; line-height: 1.5; }
+  .lee { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .lee li { display: inline-flex; align-items: center; gap: .45em; min-height: 2rem; padding: .35rem .8rem; border: 1.5px solid currentColor; border-radius: 99rem; font-size: .9rem; font-weight: 700; opacity: .45; transition: opacity .25s, background-color .25s, color .25s; }
+  .lee li::before { content: "·"; }
+  .lee li[data-leido] { opacity: 1; }
+  .agente[data-modo="con"] .lee li[data-leido] { background: var(--tinta); color: var(--lima); border-color: var(--tinta); }
+  .agente[data-modo="con"] .lee li[data-leido]::before { content: "✓"; }
+  .agente[data-modo="sin"] .lee li[data-leido] { text-decoration: line-through; color: var(--coral); }
+  .agente[data-modo="sin"] .lee li[data-leido]::before { content: "✕"; }
+  .respuesta { font-size: var(--t-grande); line-height: 1.25; text-wrap: pretty; }
+  @media (max-width: 61.99rem) { .ia { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .agente, .lee li { transition: none; } }
+</style>

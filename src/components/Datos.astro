@@ -1,0 +1,93 @@
+---
+import Mascota from './Mascota.astro';
+import { usarTextos } from '../i18n/textos.js';
+import { tablero } from '../data/nomina-demo.js';
+const { lang } = Astro.props;
+const t = usarTextos(lang).datos;
+const ids = Object.keys(tablero);
+const FILA = 10;   // alto de cada barra en unidades del gráfico
+const miles = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
+---
+<section id="datos" class="franja datos" data-color="lima">
+  <div class="cabeza">
+    <div>
+      <p class="rotulo ficha"><span>{t.ficha}</span></p>
+      <h2 class="titulo-seccion">{t.titulo}</h2>
+      <p class="entrada">{t.intro}</p>
+    </div>
+    <Mascota lang={lang} tamano="chica" gesto="senala" />
+  </div>
+
+  <div class="tablero encuadre" data-tablero data-color="tinta">
+    <p class="aviso rotulo" data-aviso><span class="marca-texto">{t.aviso}</span></p>
+    <div class="pestanas" role="tablist" aria-label={t.titulo} hidden>
+      {ids.map((id, i) => <button type="button" role="tab" id={`pestana-${id}`} aria-controls={`panel-${id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.pestanas[id]}</button>)}
+    </div>
+    {ids.map(id => {
+      const { cifras, grafico } = tablero[id], max = Math.max(...grafico.valores), n = grafico.valores.length;
+      return (
+        <div class="panel" role="tabpanel" id={`panel-${id}`} aria-labelledby={`pestana-${id}`} tabindex="0">
+          <h3 class="rotulo">{t.pestanas[id]}</h3>
+          <dl class="cifras">
+            {cifras.map(c => <div><dd data-cifra>{lang === 'en' ? c.valor.replace('.', ',').replace(/(\d),(\d) %/, '$1.$2%') : c.valor}</dd><dt>{c.nombre[lang]}</dt></div>)}
+          </dl>
+          <figure>
+            <figcaption>{grafico.titulo[lang]}</figcaption>
+            <div class="grafico" data-filas={n}>
+              <ul class="etiquetas" role="list" aria-hidden="true">{grafico.etiquetas[lang].map(e => <li>{e}</li>)}</ul>
+              <svg viewBox={`0 0 100 ${n * FILA}`} preserveAspectRatio="none" role="img" aria-labelledby={`titulo-${id}`}>
+                <title id={`titulo-${id}`}>{grafico.titulo[lang]}</title>
+                {grafico.valores.map((v, i) => <rect x="0" y={i * FILA + 2} width={Math.max(0.6, (v / max) * 100)} height={FILA - 4} />)}
+              </svg>
+              <ul class="valores" role="list" aria-hidden="true">{grafico.valores.map(v => <li>{miles(v)}</li>)}</ul>
+            </div>
+          </figure>
+          <details>
+            <summary>{t.tabla}</summary>
+            <table>
+              <caption class="solo-lector">{grafico.titulo[lang]}</caption>
+              <tbody>{grafico.etiquetas[lang].map((e, i) => <tr><th scope="row">{e}</th><td>{miles(grafico.valores[i])}</td></tr>)}</tbody>
+            </table>
+          </details>
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<script>
+  import '../scripts/datos.js';
+</script>
+
+<style>
+  .cabeza { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 2rem; align-items: end; margin-bottom: clamp(1.5rem, 4vw, 3rem); }
+  .entrada { margin-top: 1.2rem; }
+  .tablero { background: var(--fondo); color: var(--texto); padding: clamp(1.2rem, 3vw, 2.5rem); }
+  .aviso { margin-bottom: 1.2rem; }
+  .aviso .marca-texto { padding: .25rem .5rem; }
+  .pestanas { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem; }
+  [role="tab"] { min-height: 2.75rem; padding: 0 1rem; background: none; border: 1.5px solid color-mix(in srgb, var(--texto) 45%, transparent); font-weight: 700; cursor: pointer; }
+  [role="tab"][aria-selected="true"] { background: var(--texto); color: var(--fondo); border-color: var(--texto); }
+  .panel { display: grid; gap: 1.6rem; }
+  .panel + .panel { margin-top: 2.5rem; }
+  .panel h3 { color: var(--acento); }
+  :global([data-tablero][data-listo]) .panel h3 { display: none; }
+  .cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 1.2rem 2rem; }
+  dd { font-size: clamp(2.4rem, 1.4rem + 4vw, 4.6rem); font-weight: 800; font-stretch: 78%; line-height: .95; letter-spacing: -.03em; color: var(--acento); }
+  dt { margin-top: .3rem; }
+  figcaption { font-weight: 800; margin-bottom: .8rem; }
+  .grafico { display: grid; grid-template-columns: max-content minmax(0, 1fr) max-content; gap: 0 .9rem; }
+  .grafico li { height: 2.2rem; display: flex; align-items: center; }
+  .valores li { font-family: var(--f-mono); font-size: .8rem; justify-content: flex-end; }
+  .grafico svg { width: 100%; height: calc(var(--filas) * 2.2rem); }
+  .grafico[data-filas="5"] { --filas: 5; } .grafico[data-filas="6"] { --filas: 6; }
+  rect { fill: var(--acento); }
+  details summary { display: inline-flex; align-items: center; min-height: 2.75rem; cursor: pointer; text-decoration: underline; text-underline-offset: .25em; }
+  table { margin-top: .6rem; border-collapse: collapse; width: 100%; max-width: 26rem; }
+  th, td { text-align: left; padding: .45rem 0; border-bottom: 1.5px solid color-mix(in srgb, var(--texto) 30%, transparent); font-weight: 500; }
+  td { text-align: right; font-family: var(--f-mono); font-size: .85rem; }
+  @media (max-width: 47.99rem) {
+    .cabeza { grid-template-columns: minmax(0, 1fr); }
+    .cabeza :global(.masc) { max-width: 18rem; }
+  }
+</style>

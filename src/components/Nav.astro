@@ -1,0 +1,83 @@
+---
+import { usarTextos, rutaLocal } from '../i18n/textos.js';
+// inicio: ruta de la página principal en esta lengua; rutaAlterna: esta misma página en la otra lengua.
+const { lang, rutaAlterna } = Astro.props;
+const t = usarTextos(lang);
+const inicio = rutaLocal(lang, '/');
+const enInicio = Astro.url.pathname.replace(/\/$/, '') === inicio.replace(/\/$/, '');
+const ancla = id => (enInicio ? `#${id}` : `${inicio}#${id}`);
+---
+<a class="saltar boton" href="#contenido">{t.sitio.saltar}</a>
+<header class="nav" data-nav data-color="cobalto">
+  <div class="fila">
+    <a class="marca" href={inicio}>{t.sitio.nombre}</a>
+    <nav class="enlaces" aria-label={t.nav.etiqueta}>
+      {t.nav.enlaces.map(([id, texto]) => <a href={ancla(id)} data-seccion={id}>{texto}</a>)}
+    </nav>
+    <div class="lado">
+      <a class="idioma rotulo" href={rutaAlterna} data-idioma data-base={rutaAlterna} lang={lang === 'es' ? 'en' : 'es'} hreflang={lang === 'es' ? 'en' : 'es'}>
+        <span aria-hidden="true">{t.sitio.otraLenguaCorta}</span><span class="solo-lector">{t.sitio.otraLengua}</span>
+      </a>
+      <a class="hablar" href={ancla('contacto')}>{t.nav.boton}</a>
+      <button class="abrir" type="button" data-menu-abrir aria-haspopup="dialog" aria-controls="menu">
+        <span class="rayas" aria-hidden="true"></span><span class="solo-lector">{t.nav.menu}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog id="menu" data-color="cobalto" aria-label={t.nav.menu}>
+  <div class="cabeza">
+    <span class="marca">{t.sitio.nombre}</span>
+    <button type="button" class="cerrar" data-menu-cerrar>{t.nav.cerrar} <span aria-hidden="true">×</span></button>
+  </div>
+  <nav aria-label={t.nav.etiqueta}>
+    {t.nav.enlaces.map(([id, texto], i) => <a href={ancla(id)}><span class="rotulo">0{i + 1}</span>{texto}</a>)}
+  </nav>
+  <div class="pie-menu">
+    <a class="rotulo" href={rutaAlterna} data-idioma data-base={rutaAlterna} lang={lang === 'es' ? 'en' : 'es'}>{t.sitio.otraLengua}</a>
+    <a class="boton" href={ancla('contacto')}>{t.nav.boton}</a>
+  </div>
+</dialog>
+
+<script>
+  import '../scripts/nav.js';
+</script>
+
+<style>
+  .nav { position: sticky; top: 0; z-index: 20; background: var(--fondo); color: var(--texto); border-bottom: 1.5px solid color-mix(in srgb, var(--texto) 25%, transparent); }
+  .fila { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: var(--alto-nav); padding: 0 var(--borde-pagina); }
+  .marca { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 800; font-stretch: 100%; letter-spacing: .01em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+  .enlaces { display: none; gap: clamp(.2rem, 1.2vw, 1.2rem); }
+  .enlaces a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 .55rem; text-decoration: none; font-weight: 600; white-space: nowrap; }
+  .enlaces a:hover { text-decoration: underline; text-underline-offset: .3em; }
+  .enlaces a[aria-current] { background: var(--acento); color: var(--sobre); }
+  .lado { display: flex; align-items: center; gap: .5rem; }
+  .idioma { display: inline-grid; place-items: center; min-width: 2.75rem; min-height: 2.75rem; border: 1.5px solid; text-decoration: none; font-weight: 700; }
+  .hablar { display: none; align-items: center; min-height: 2.75rem; padding: 0 1rem; background: var(--acento); color: var(--sobre); font-weight: 800; text-decoration: none; white-space: nowrap; }
+  .abrir { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; background: none; border: 0; cursor: pointer; }
+  .rayas, .rayas::after { display: block; width: 1.6rem; height: 2px; background: currentColor; }
+  .rayas { translate: 0 -4px; }
+  .rayas::after { content: ""; translate: 0 8px; }
+  @media (min-width: 62rem) {
+    .enlaces { display: flex; }
+    .hablar { display: inline-flex; }
+    .abrir { display: none; }
+  }
+
+  dialog { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; border: 0; padding: 0 var(--borde-pagina) 1.5rem; background: var(--fondo); color: var(--texto); overscroll-behavior: contain; }
+  dialog[open] { display: flex; flex-direction: column; }
+  dialog::backdrop { background: var(--tinta); }
+  .cabeza { display: flex; justify-content: space-between; align-items: center; min-height: var(--alto-nav); }
+  .cerrar { min-height: 2.75rem; padding: 0 .2rem; background: none; border: 0; font-weight: 700; cursor: pointer; }
+  dialog nav { display: flex; flex-direction: column; margin-top: 1.5rem; }
+  dialog nav a { display: flex; align-items: baseline; gap: 1rem; padding: .35rem 0; font-size: clamp(2.2rem, 11vw, 3.4rem); line-height: 1.1; font-weight: 800; font-stretch: 80%; letter-spacing: -.03em; text-decoration: none; border-bottom: 1.5px solid color-mix(in srgb, var(--texto) 25%, transparent); }
+  .pie-menu { margin-top: auto; padding-top: 1.5rem; display: grid; gap: 1rem; }
+  .pie-menu .rotulo { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  .pie-menu .boton { justify-content: center; background: var(--acento); color: var(--sobre); }
+  @media (prefers-reduced-motion: no-preference) {
+    dialog[open] nav a { animation: entra .45s both cubic-bezier(.2, .7, .2, 1); animation-delay: calc(var(--i, 0) * 55ms + 80ms); }
+    dialog nav a:nth-child(2) { --i: 1; } dialog nav a:nth-child(3) { --i: 2; } dialog nav a:nth-child(4) { --i: 3; } dialog nav a:nth-child(5) { --i: 4; }
+    @keyframes entra { from { opacity: 0; translate: 0 1.2rem; } }
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+import { usarTextos, rutaLocal } from '../i18n/textos.js';
+import { trabajos } from '../data/trabajos.js';
+const { lang } = Astro.props;
+const t = usarTextos(lang).trabajos;
+// Los casos con captura van grandes; el resto, en tarjetas de color.
+const grandes = trabajos.filter(w => w.caso && w.captura), resto = trabajos.filter(w => !grandes.includes(w));
+const colores = ['cobalto', 'coral', 'lima', 'tinta'];
+const alto = w => (w.slug === 'mesura' ? 509 : 750);
+---
+<section id="trabajos" class="franja" data-color="lila">
+  <header>
+    <div>
+      <p class="rotulo ficha"><span>{t.ficha}</span><span>{String(trabajos.length).padStart(2, '0')}</span></p>
+      <h2>{t.titulo}</h2>
+    </div>
+    <p class="entrada">{t.entrada}</p>
+  </header>
+
+  <ol role="list" data-trabajos>
+    {grandes.map((w, i) => (
+      <li class="destacado">
+        <div class="marco" data-color={colores[i % 4]}>
+          <div class="ventana"><img src={`/img/trabajos/${w.slug}.webp`} alt={`${t.capturaDe} ${w.nombre}`} width="1200" height={alto(w)} loading="lazy" decoding="async" /></div>
+          <img class="movil" src={`/img/trabajos/${w.slug}-movil.webp`} alt={`${t.capturaDe} ${w.nombre} ${t.movil}`} width="480" height="1039" loading="lazy" decoding="async" />
+        </div>
+        <div class="datos">
+          <p><span class="pildora">{w.tipo[lang]}</span></p>
+          <h3>{w.nombre}</h3>
+          <p>{w.resumen[lang]}</p>
+          <ul role="list" class="hecho">{w.hecho[lang].slice(0, 3).map(x => <li>{x}</li>)}</ul>
+          <p class="rotulo">{w.con}</p>
+          <p class="enlaces">
+            <a class="boton" href={rutaLocal(lang, `/trabajos/${w.slug}/`)}>{t.caso} <span aria-hidden="true">→</span></a>
+            {w.url && <a class="boton-linea" href={w.url} rel="noopener">{t.sitio} <span aria-hidden="true">↗</span></a>}
+          </p>
+        </div>
+      </li>
+    ))}
+    {resto.map((w, i) => (
+      <li class="tarjeta" data-color={colores[(i + grandes.length) % 4]}>
+        {w.captura
+          ? <div class="ventana"><img src={`/img/trabajos/${w.slug}.webp`} alt={`${t.capturaDe} ${w.nombre}`} width="1200" height={alto(w)} loading="lazy" decoding="async" /></div>
+          : <p class="sin-captura" aria-hidden="true">{w.nombre}</p>}
+        <div class="datos">
+          <p class="enlaces"><span class="pildora">{w.tipo[lang]}</span>{w.enConstruccion && <span class="pildora">{t.construccion}</span>}</p>
+          <h3>{w.nombre}</h3>
+          <p>{w.resumen[lang]}</p>
+          <p class="enlaces">
+            {w.caso && <a class="boton" href={rutaLocal(lang, `/trabajos/${w.slug}/`)}>{t.caso} <span aria-hidden="true">→</span></a>}
+            {w.url && <a class="boton-linea" href={w.url} rel="noopener">{t.sitio} <span aria-hidden="true">↗</span></a>}
+            {w.repo && <a class="boton-linea" href={w.repo} rel="noopener">{t.repo} <span aria-hidden="true">↗</span></a>}
+          </p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: clamp(2rem, 5vw, 4rem); }
+  h2 { font-size: clamp(4rem, 17vw, 10rem); font-weight: 800; font-stretch: 75%; text-transform: uppercase; line-height: .82; letter-spacing: -.03em; }
+  /* Rejilla de 6: los destacados la cruzan entera; las tarjetas van de a tres, de a dos o de a una. */
+  ol { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.5rem); }
+  .destacado { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; margin-bottom: clamp(2.5rem, 6vw, 5rem); }
+  .destacado:nth-child(even) .marco { order: 2; }
+  .marco { position: relative; background: var(--fondo); padding: clamp(1rem, 3vw, 2.2rem); border-radius: var(--radio); }
+  .ventana { border-radius: .6rem; overflow: hidden; border: 1.5px solid var(--tinta); background: var(--tinta); }
+  .ventana::before { content: "● ● ●"; display: block; padding: .5rem .8rem; font-size: .5rem; letter-spacing: .3em; color: var(--lila); }
+  .ventana img { width: 100%; }
+  .movil { position: absolute; width: 22%; right: -3%; bottom: -8%; border-radius: .6rem; border: 1.5px solid var(--tinta); box-shadow: .4rem .4rem 0 var(--tinta); rotate: 4deg; }
+  .destacado:nth-child(even) .movil { right: auto; left: -3%; rotate: -4deg; }
+  .datos { display: grid; gap: 1rem; justify-items: start; align-content: start; }
+  h3 { font-size: clamp(1.7rem, 1rem + 2.4vw, 3.2rem); font-weight: 800; font-stretch: 85%; line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
+  .hecho { display: grid; gap: .35rem; }
+  .hecho li::before { content: "✦ "; color: var(--acento); }
+  .enlaces { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .tarjeta { grid-column: span 2; display: grid; grid-template-rows: auto 1fr; gap: 1rem; padding: 1.1rem; border-radius: var(--radio); background: var(--fondo); color: var(--texto); }
+  .tarjeta .datos { grid-template-rows: auto auto 1fr auto; }
+  .tarjeta h3 { font-size: 1.7rem; }
+  .tarjeta .boton { background: var(--acento); color: var(--sobre); }
+  .sin-captura { aspect-ratio: 8 / 5; display: grid; place-items: center; padding: 1rem; border: 1.5px solid; border-radius: .6rem; text-align: center; font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 800; font-stretch: 75%; text-transform: uppercase; line-height: .85; color: transparent; -webkit-text-stroke: 1.5px var(--acento); }
+  @media (max-width: 61.99rem) { .tarjeta { grid-column: span 3; } }
+  @media (max-width: 43.99rem) {
+    .destacado { grid-template-columns: minmax(0, 1fr); }
+    .destacado:nth-child(even) .marco { order: 0; }
+    .movil, .destacado:nth-child(even) .movil { right: 4%; left: auto; bottom: -5%; }
+    .tarjeta { grid-column: 1 / -1; }
+  }
+</style>

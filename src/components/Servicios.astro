@@ -1,0 +1,58 @@
+---
+import { usarTextos } from '../i18n/textos.js';
+const t = usarTextos(Astro.props.lang).servicios;
+const colores = ['cobalto', 'coral', 'lima'];
+---
+<section id="servicios" class="servicios" data-color="lila">
+  <div class="cabeza">
+    <p class="rotulo ficha"><span>{t.ficha}</span></p>
+    <h2 class="titulo-seccion">{t.titulo}</h2>
+  </div>
+  <p class="palabra" aria-hidden="true">{t.palabra}</p>
+  <ol class="paneles" role="list">
+    {t.items.map((s, i) => (
+      <li class="panel" data-panel data-color={colores[i]}>
+        <div class="enc"><span class="rotulo">0{i + 1} / 03</span><h3>{s.nombre}</h3></div>
+        <div class="cuerpo">
+          <p class="desc">{s.desc}</p>
+          <div>
+            <h4 class="rotulo">{t.entrego}</h4>
+            <ul role="list">{s.entrego.map(x => <li>{x}</li>)}</ul>
+          </div>
+          <div data-serie>
+            <h4 class="rotulo"><span class="marca-texto">{t.serie}</span></h4>
+            <ul role="list">{s.serie.map(x => <li>{x}</li>)}</ul>
+          </div>
+        </div>
+        <p class="ej"><span class="rotulo">{t.ejemplo}</span> <a href={`#${s.ancla}`}>{s.ejemplo}</a></p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .servicios { background: var(--fondo); color: var(--texto); padding: clamp(3.5rem, 8vw, 7rem) 0 clamp(2rem, 5vw, 4rem); position: relative; }
+  .cabeza { padding: 0 var(--borde-pagina); }
+  /* Palabra gigante: decorativa (el título real es el h2). 20vw × 9 letras angostas ≈ el ancho de la ventana. */
+  .palabra { font-size: clamp(4.4rem, 19.5vw, 11rem); font-weight: 800; font-stretch: 75%; text-transform: uppercase; line-height: .8; letter-spacing: -.03em; white-space: nowrap; overflow: hidden; padding: 1.5rem var(--borde-pagina) 0; color: var(--acento); }
+  .paneles { display: grid; gap: 1rem; padding: 0 var(--borde-pagina); margin-top: -.5rem; position: relative; }
+  .panel { background: var(--fondo); color: var(--texto); padding: clamp(1.2rem, 2.5vw, 2rem); display: grid; gap: 1.2rem; }
+  .enc { display: flex; align-items: baseline; gap: 1.2rem; flex-wrap: wrap; min-height: 2.6rem; }
+  h3 { font-size: clamp(1.7rem, 1.2rem + 2vw, 2.8rem); line-height: 1; font-weight: 800; font-stretch: 85%; letter-spacing: -.03em; }
+  .cuerpo { display: grid; gap: 1.4rem 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+  .desc { font-size: var(--t-grande); line-height: 1.25; text-wrap: pretty; }
+  h4 { margin-bottom: .6rem; }
+  .cuerpo ul { display: grid; gap: .35rem; }
+  .cuerpo li { padding-left: 1.1em; position: relative; }
+  .cuerpo li::before { content: "+"; position: absolute; left: 0; font-family: var(--f-mono); color: var(--acento); }
+  .ej { border-top: 1.5px solid color-mix(in srgb, var(--texto) 30%, transparent); padding-top: .9rem; }
+  .ej .rotulo { margin-right: .6rem; }
+
+  /* Los paneles se apilan como fichas al hacer scroll: cada uno deja a la vista el encabezado del anterior. */
+  @media (min-width: 62rem) and (min-height: 46rem) and (prefers-reduced-motion: no-preference) {
+    .palabra { position: sticky; top: var(--alto-nav); }
+    .panel { position: sticky; top: calc(var(--alto-nav) + 1rem + var(--n) * 4.4rem); min-height: 26rem; align-content: start; }
+    .panel:nth-child(1) { --n: 0; } .panel:nth-child(2) { --n: 1; } .panel:nth-child(3) { --n: 2; }
+    .paneles { gap: 6rem; padding-bottom: 2rem; }
+  }
+</style>

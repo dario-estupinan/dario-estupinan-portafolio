@@ -1,0 +1,23 @@
+/* Paleta «Cobalto y lima», medida (WCAG): lila/cobalto 9,4 · lima/cobalto 8,7 · tinta/lila 15,9 · tinta/coral 7,3 · tinta/lima 14,6 · cobalto/lima 8,7 */
+:root {
+  --cobalto: #22308F;
+  --lila: #ECEBF8;
+  --tinta: #0F1026;
+  --coral: #FF7A66;
+  --lima: #C9F26B;
+  --f-texto: "Bricolage Grotesque", system-ui, sans-serif;
+  --f-mono: "Martian Mono", ui-monospace, monospace;
+  --borde-pagina: clamp(1rem, 3vw, 2.5rem);
+  --alto-nav: 4rem;
+  --radio: 1.2rem;
+  --t-gigante: clamp(3.2rem, 1rem + 11vw, 8rem);      /* máx = 2,5 × mín */
+  --t-titular: clamp(2.1rem, 1.1rem + 3.9vw, 5rem);
+  --t-seccion: clamp(1.9rem, 1.2rem + 2.6vw, 3.6rem);
+  --t-grande: clamp(1.25rem, 1rem + .9vw, 1.75rem);
+}
+/* Cada franja define su fondo, su texto, su acento y el color que va sobre el acento. */
+[data-color="cobalto"] { --fondo: var(--cobalto); --texto: var(--lila);  --acento: var(--lima);    --sobre: var(--tinta); }
+[data-color="lila"]    { --fondo: var(--lila);    --texto: var(--tinta); --acento: var(--cobalto); --sobre: var(--lila); }
+[data-color="coral"]   { --fondo: var(--coral);   --texto: var(--tinta); --acento: var(--tinta);   --sobre: var(--coral); }
+[data-color="lima"]    { --fondo: var(--lima);    --texto: var(--tinta); --acento: var(--cobalto); --sobre: var(--lima); }
+[data-color="tinta"]   { --fondo: var(--tinta);   --texto: var(--lila);  --acento: var(--lima);    --sobre: var(--tinta); }

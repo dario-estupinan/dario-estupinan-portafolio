@@ -1,0 +1,364 @@
+{
+  "sitio": {
+    "nombre": "Darío Estupiñán",
+    "titulo": "Darío Estupiñán · Software developer in Guayaquil",
+    "descripcion": "Websites, data dashboards and custom software for businesses. Guayaquil, Ecuador.",
+    "saltar": "Skip to content",
+    "otraLengua": "Español",
+    "otraLenguaCorta": "ES",
+    "whatsapp": "Hi Darío. I saw your portfolio and I'd like to talk about a project."
+  },
+  "mascota": {
+    "etiqueta": "Mascot drawn with letters",
+    "cambiar": "Change mascot",
+    "nombres": {
+      "datos": "Data engineer",
+      "gato": "Cat",
+      "ojo": "Eye"
+    }
+  },
+  "nav": {
+    "etiqueta": "Main",
+    "enlaces": [
+      [
+        "servicios",
+        "Services"
+      ],
+      [
+        "trabajos",
+        "Work"
+      ],
+      [
+        "datos",
+        "Data"
+      ],
+      [
+        "protocolo",
+        "Process"
+      ],
+      [
+        "sobre-mi",
+        "About"
+      ]
+    ],
+    "boton": "Let's talk",
+    "menu": "Menu",
+    "cerrar": "Close"
+  },
+  "bienvenida": {
+    "pasos": [
+      "Loading the typefaces",
+      "Drawing the mascot with 2,604 characters",
+      "Measuring contrast",
+      "Ready"
+    ],
+    "saltar": "Tap to enter"
+  },
+  "portada": {
+    "ficha": [
+      "No. 01 — Home",
+      "Guayaquil 02°11′S 79°53′W",
+      "HEX #22308F"
+    ],
+    "h1": {
+      "antes": "I build",
+      "a": "websites",
+      "b": "data dashboards",
+      "y": "and",
+      "c": "custom software"
+    },
+    "parrafo": "I'm Darío Estupiñán, a software developer in Guayaquil. I work with businesses that need to be found, to understand their numbers, or to stop doing by hand what a system can do.",
+    "boton": "Book a first conversation",
+    "lista": [
+      [
+        "Websites",
+        "Fast and easy to find"
+      ],
+      [
+        "Data dashboards",
+        "Power BI"
+      ],
+      [
+        "Custom software",
+        "Built around your operation"
+      ]
+    ],
+    "cinta": [
+      "Web",
+      "Data",
+      "Software"
+    ],
+    "pausa": "Pause",
+    "mover": "Play"
+  },
+  "servicios": {
+    "ficha": "No. 02 — Services",
+    "palabra": "Services",
+    "titulo": "Three services, one way of working",
+    "entrego": "What I deliver",
+    "serie": "Included as standard",
+    "ejemplo": "Example",
+    "items": [
+      {
+        "nombre": "Websites",
+        "desc": "Sites that load fast, read well on a phone and say clearly what your business does.",
+        "entrego": [
+          "An original design, not a recycled template",
+          "A mobile version tested from 360 px up",
+          "Your copy and your photos, in place",
+          "A manual for updating it"
+        ],
+        "serie": [
+          "Real text that people, search engines and AI assistants can read",
+          "Business details marked up for machines",
+          "Fast loading, measured",
+          "One page per service, plus frequent questions"
+        ],
+        "ejemplo": "NPC Guayaquil Muscle Show",
+        "ancla": "trabajos"
+      },
+      {
+        "nombre": "Data dashboards",
+        "desc": "Your sales, payroll or operations on one screen you can read without being an analyst.",
+        "entrego": [
+          "A tidy data model",
+          "Indicators agreed with you",
+          "A Power BI dashboard with filters",
+          "Control figures to check that it adds up"
+        ],
+        "serie": [
+          "Tidy data with clear names",
+          "A written definition of every indicator",
+          "The foundation any AI tool needs to work with your business"
+        ],
+        "ejemplo": "Payroll dashboard (demo)",
+        "ancla": "datos"
+      },
+      {
+        "nombre": "Custom software",
+        "desc": "A system built around the way you work: records, access control, reports and automation.",
+        "entrego": [
+          "A review of your current process",
+          "A web system with users and permissions",
+          "Testing before release",
+          "A manual and training"
+        ],
+        "serie": [
+          "Structured data from day one",
+          "Export of your information",
+          "Usage documentation"
+        ],
+        "ejemplo": "QR access for NPC Guayaquil Muscle Show",
+        "ancla": "trabajos"
+      }
+    ]
+  },
+  "ia": {
+    "ficha": "No. 03 — Presence in artificial intelligence",
+    "titulo": "Helping an AI assistant describe your business",
+    "frase": "An AI assistant answers with what it can read. If your site does not say it clearly, it has nowhere to get it from.",
+    "pregunta": "Who makes custom cakes in Urdesa?",
+    "sin": {
+      "titulo": "Without this",
+      "respuesta": "I can't find enough information about a business like that in the area."
+    },
+    "con": {
+      "titulo": "With this",
+      "respuesta": "Horno Lento makes custom cakes in Urdesa, Guayaquil. It opens Tuesday to Sunday and takes orders on WhatsApp."
+    },
+    "ilustracion": "Illustration: a simulated answer about a fictional business.",
+    "incluido": "What is already included",
+    "lista": [
+      [
+        "Real text",
+        "What your business does, where and when, written on the page and not inside an image."
+      ],
+      [
+        "Details marked up for machines",
+        "Name, address, opening hours and services in the format search engines and assistants read."
+      ],
+      [
+        "Fast loading",
+        "A slow site gets read halfway, by people and by crawlers."
+      ],
+      [
+        "One page per service",
+        "Everything you offer has its own address and its own explanation."
+      ],
+      [
+        "Frequent questions",
+        "Your customers' real questions, answered in your words."
+      ]
+    ],
+    "asistente": "AI assistant",
+    "modos": "Compare the answer"
+  },
+  "trabajos": {
+    "ficha": "No. 04 — Work",
+    "titulo": "Work",
+    "entrada": "Nine projects from 2026. Four have their full case told: what was needed, what I did and with what.",
+    "movil": "on a phone",
+    "caso": "Read the case",
+    "sitio": "Visit the site",
+    "repo": "See the repository",
+    "construccion": "In progress",
+    "volver": "Back to the work list",
+    "necesidad": "What was needed",
+    "hecho": "What I did",
+    "con": "Built with",
+    "capturaDe": "Screenshot of"
+  },
+  "datos": {
+    "ficha": "No. 05 — Data",
+    "titulo": "Your numbers, on one screen",
+    "intro": "This is what payroll looks like once it stops living in loose spreadsheets. Tap the tabs.",
+    "aviso": "Demo data: invented figures",
+    "pestanas": {
+      "resumen": "Summary",
+      "horas": "Hours",
+      "rotacion": "Turnover",
+      "vacaciones": "Leave"
+    },
+    "mes": "Month",
+    "tabla": "See the data as a table",
+    "area": "Area"
+  },
+  "protocolo": {
+    "ficha": "No. 06 — Process",
+    "titulo": "What happens after you write to me",
+    "paso": "Step",
+    "pasos": [
+      [
+        "First contact",
+        "You write to me on WhatsApp or by email and tell me what you need. I reply within one hour during business hours.",
+        "A hand typing a message on a phone"
+      ],
+      [
+        "Needs assessment",
+        "I ask you a few short questions about your business, your customers and what takes up your time today.",
+        "A person taking notes in a notebook"
+      ],
+      [
+        "Scheduled meeting",
+        "We talk by video call or in person, with your answers already read.",
+        "Several people talking at a table with a laptop"
+      ],
+      [
+        "Written proposal",
+        "You receive a document with the scope, the timeline and the price.",
+        "A person going over a document with a pen"
+      ],
+      [
+        "Development with visible progress",
+        "You see the work on a preview link as it moves forward and give feedback before it is finished.",
+        "A laptop with code on the screen"
+      ],
+      [
+        "Delivery with training and a manual",
+        "I publish it, show you how to use it and leave a written manual for your team.",
+        "Two people going over a document next to a laptop"
+      ],
+      [
+        "Follow-up",
+        "I stay available after delivery for adjustments and questions.",
+        "A person taking a phone call"
+      ]
+    ]
+  },
+  "sobre": {
+    "ficha": "No. 07 — About",
+    "titulo": "About me",
+    "bio": [
+      "I'm a software developer in Guayaquil, Ecuador, finishing a degree in Information Systems Engineering at the Universidad de Guayaquil.",
+      "I measure the cause before touching the code, I release through testing, and I write the manual the user will actually read."
+    ],
+    "fotoAlt": "Portrait of Darío Estupiñán",
+    "experiencia": "Experience and education",
+    "linea": [
+      [
+        "2026 – today",
+        "Software Developer",
+        "VIAXPERTA S.A."
+      ],
+      [
+        "2024 – 2026",
+        "Operations Technician and Systems Administrator",
+        "Limitless Ocean Cargo (LOCSA S.A.)"
+      ],
+      [
+        "2022 – 2023",
+        "Administrative and Systems Assistant",
+        "Ecuadorian International Transport"
+      ],
+      [
+        "Expected 2027",
+        "Information Systems Engineering",
+        "Universidad de Guayaquil"
+      ]
+    ],
+    "herramientasTitulo": "Tools",
+    "herramientas": [
+      "C# and .NET",
+      "SQL Server",
+      "TypeScript",
+      "Astro",
+      "Next.js",
+      "Laravel",
+      "WordPress",
+      "Power BI",
+      "n8n",
+      "PostgreSQL"
+    ],
+    "cv": "Download résumé",
+    "sello": "Available for projects · Guayaquil · ",
+    "selloPausa": "Stop the badge",
+    "selloMover": "Spin the badge"
+  },
+  "preguntas": {
+    "ficha": "No. 08 — Frequent questions",
+    "titulo": "Frequent questions",
+    "lista": [
+      [
+        "How long does a project take?",
+        "It depends on the scope. The timeline is written into the proposal before work starts, and you see progress while it is being built."
+      ],
+      [
+        "What do I need to have before we start?",
+        "An idea of what you want to achieve. Copy, photos, a domain and the rest get sorted out in the needs assessment."
+      ],
+      [
+        "How much does it cost?",
+        "Every business is different, so there is no fixed rate. After the assessment you receive a written proposal."
+      ],
+      [
+        "What access do I get once it is finished?",
+        "You get the access you need to use and update your site or system (for example, the admin dashboard) and its manual. How hosting and the domain are handled depends on each project, and it is written into the proposal before work starts."
+      ],
+      [
+        "Do you work with businesses outside Guayaquil?",
+        "Yes. The whole process can be done remotely."
+      ],
+      [
+        "What happens after delivery?",
+        "I stay available for adjustments and questions. What that follow-up covers is written into the proposal."
+      ]
+    ]
+  },
+  "contacto": {
+    "ficha": "No. 09 — Contact",
+    "titulo": "Let's talk",
+    "texto": "Tell me what your business needs. I reply within one hour during business hours.",
+    "whatsapp": "Message me on WhatsApp",
+    "correo": "Email",
+    "cinta": [
+      "Let's talk",
+      "Web",
+      "Data",
+      "Software"
+    ]
+  },
+  "pie": {
+    "derechos": "© 2026 Darío Estupiñán · Guayaquil, Ecuador",
+    "arriba": "Back to top"
+  }
+}

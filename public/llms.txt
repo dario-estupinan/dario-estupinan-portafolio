@@ -1,0 +1,25 @@
+# Darío Estupiñán
+
+> Desarrollador de software en Guayaquil, Ecuador. Hace sitios web, tableros de datos (Power BI) y software a medida para negocios. Atiende en español e inglés, también a distancia.
+
+## Servicios
+- Sitios web: diseño propio, versión para celular, textos y datos del negocio legibles para personas, buscadores y asistentes de IA.
+- Tableros de datos: modelo de datos ordenado e indicadores en Power BI.
+- Software a medida: sistemas web con usuarios, permisos, reportes y automatizaciones.
+
+## Cómo se trabaja
+Primer contacto, evaluación de necesidades, reunión agendada, propuesta escrita, desarrollo con avances visibles, entrega con capacitación y manual, y acompañamiento. No hay tarifa fija: cada proyecto se cotiza después de la evaluación.
+
+## Páginas
+- [Inicio (español)](https://dario-estupinan.pages.dev/)
+- [Home (English)](https://dario-estupinan.pages.dev/en/)
+- [Caso: NPC Guayaquil Muscle Show](https://dario-estupinan.pages.dev/trabajos/npc-guayaquil/)
+- [Caso: Maple Tree](https://dario-estupinan.pages.dev/trabajos/maple-tree/)
+- [Caso: Dra. Lorena Martínez](https://dario-estupinan.pages.dev/trabajos/dra-lorena-martinez/)
+- [Caso: Fiscalio](https://dario-estupinan.pages.dev/trabajos/fiscalio/)
+
+## Contacto
+- WhatsApp: +593 99 455 6815
+- Correo: dario.estupinand@hotmail.com
+- LinkedIn: https://www.linkedin.com/in/dario-estupinan
+- GitHub: https://github.com/dario-estupinan

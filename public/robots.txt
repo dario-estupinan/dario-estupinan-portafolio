@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dario-estupinan.pages.dev/sitemap-index.xml

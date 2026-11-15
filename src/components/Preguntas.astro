@@ -1,0 +1,34 @@
+---
+import { usarTextos } from '../i18n/textos.js';
+const t = usarTextos(Astro.props.lang).preguntas;
+---
+<section id="preguntas" class="franja" data-color="lila">
+  <div class="rejilla">
+    <div>
+      <p class="rotulo ficha"><span>{t.ficha}</span></p>
+      <h2 class="titulo-seccion">{t.titulo}</h2>
+    </div>
+    <div class="lista">
+      {t.lista.map(([pregunta, respuesta]) => (
+        <details>
+          <summary><span>{pregunta}</span><span class="signo" aria-hidden="true"></span></summary>
+          <p>{respuesta}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rejilla { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(1.5rem, 5vw, 5rem); align-items: start; }
+  .lista { border-top: 1.5px solid; }
+  details { border-bottom: 1.5px solid; }
+  summary { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; min-height: 3.6rem; padding: .7rem 0; cursor: pointer; list-style: none; font-size: clamp(1.15rem, 1rem + .7vw, 1.6rem); font-weight: 800; font-stretch: 88%; line-height: 1.15; letter-spacing: -.01em; }
+  summary::-webkit-details-marker { display: none; }
+  .signo { width: 1.1rem; height: 1.1rem; position: relative; flex: none; }
+  .signo::before, .signo::after { content: ""; position: absolute; background: currentColor; inset: calc(50% - 1px) 0; }
+  .signo::after { rotate: 90deg; transition: rotate .25s; }
+  details[open] .signo::after { rotate: 0deg; }
+  details p { padding: 0 0 1.4rem; max-width: 56ch; font-size: 1.1rem; }
+  @media (max-width: 47.99rem) { .rejilla { grid-template-columns: minmax(0, 1fr); } }
+</style>

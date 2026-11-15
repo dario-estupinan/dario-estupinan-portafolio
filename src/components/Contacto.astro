@@ -1,0 +1,43 @@
+---
+import Mascota from './Mascota.astro';
+import Cinta from './Cinta.astro';
+import { usarTextos } from '../i18n/textos.js';
+import { enlaceWhatsApp, CORREO, TELEFONO_VISIBLE, LINKEDIN, GITHUB } from '../lib/contacto.js';
+const { lang } = Astro.props;
+const todo = usarTextos(lang), t = todo.contacto;
+---
+<section id="contacto" data-color="tinta" class="contacto">
+  <div class="franja rejilla">
+    <div>
+      <p class="rotulo ficha"><span>{t.ficha}</span></p>
+      <h2>{t.titulo}</h2>
+      <p class="entrada">{t.texto}</p>
+      <a class="boton grande" href={enlaceWhatsApp(todo.sitio.whatsapp)} rel="noopener">{t.whatsapp} <span aria-hidden="true">→</span></a>
+      <ul role="list">
+        <li><span class="rotulo">WhatsApp</span><a href={enlaceWhatsApp(todo.sitio.whatsapp)} rel="noopener">{TELEFONO_VISIBLE}</a></li>
+        <li><span class="rotulo">{t.correo}</span><a href={`mailto:${CORREO}`}>{CORREO}</a></li>
+        <li><span class="rotulo">LinkedIn</span><a href={LINKEDIN} rel="noopener">linkedin.com/in/dario-estupinan</a></li>
+        <li><span class="rotulo">GitHub</span><a href={GITHUB} rel="noopener">github.com/dario-estupinan</a></li>
+      </ul>
+    </div>
+    <Mascota lang={lang} tamano="chica" gesto="saluda" />
+  </div>
+  <Cinta lang={lang} palabras={t.cinta} color="coral" />
+</section>
+
+<style>
+  .contacto { background: var(--fondo); color: var(--texto); }
+  .rejilla { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 2rem; align-items: center; }
+  h2 { font-size: clamp(4.2rem, 19vw, 10.5rem); font-weight: 800; font-stretch: 75%; text-transform: uppercase; line-height: .82; letter-spacing: -.03em; color: var(--acento); margin-bottom: 1.5rem; }
+  .grande { margin-top: 1.8rem; font-size: 1.2rem; min-height: 3.6rem; padding: .9rem 1.6rem; background: var(--acento); color: var(--sobre); }
+  .grande:hover { background: var(--texto); color: var(--fondo); }
+  ul { margin-top: 2.2rem; border-top: 1.5px solid; max-width: 40rem; }
+  li { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 1rem; align-items: center; border-bottom: 1.5px solid; }
+  li a { display: flex; align-items: center; min-height: 2.9rem; font-weight: 700; text-decoration: none; overflow-wrap: anywhere; }
+  li a:hover { text-decoration: underline; text-underline-offset: .25em; }
+  @media (max-width: 47.99rem) {
+    .rejilla { grid-template-columns: minmax(0, 1fr); }
+    .rejilla :global(.masc) { max-width: 18rem; order: -1; }
+    li { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: .5rem; }
+  }
+</style>

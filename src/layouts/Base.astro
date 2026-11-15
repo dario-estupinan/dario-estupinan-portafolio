@@ -1,0 +1,46 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import Nav from '../components/Nav.astro';
+import Bienvenida from '../components/Bienvenida.astro';
+import Pie from '../components/Pie.astro';
+import { usarTextos } from '../i18n/textos.js';
+// rutaAlterna: la misma página en la otra lengua (ruta absoluta dentro del sitio).
+const { lang, titulo, descripcion, rutaAlterna } = Astro.props;
+const t = usarTextos(lang);
+const sitio = Astro.site;
+const aqui = new URL(Astro.url.pathname, sitio).href;
+const alla = new URL(rutaAlterna, sitio).href;
+const [urlEs, urlEn] = lang === 'es' ? [aqui, alla] : [alla, aqui];
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo ?? t.sitio.titulo}</title>
+    <meta name="description" content={descripcion ?? t.sitio.descripcion} />
+    <link rel="canonical" href={aqui} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={titulo ?? t.sitio.titulo} />
+    <meta property="og:description" content={descripcion ?? t.sitio.descripcion} />
+    <meta property="og:url" content={aqui} />
+    <meta property="og:image" content={new URL('/img/og.png', sitio).href} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_EC' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="alternate" hreflang="es" href={urlEs} />
+    <link rel="alternate" hreflang="en" href={urlEn} />
+    <link rel="alternate" hreflang="x-default" href={urlEs} />
+    <link rel="preload" href="/fuentes/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#22308F" />
+    <script is:inline src="/bienvenida-pre.js"></script>
+    <slot name="cabeza" />
+  </head>
+  <body>
+    <Bienvenida lang={lang} />
+    <Nav lang={lang} rutaAlterna={rutaAlterna} />
+    <slot />
+    <Pie lang={lang} rutaAlterna={rutaAlterna} />
+  </body>
+</html>

@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { usarTextos, rutaLocal } from '../i18n/textos.js';
+import { enlaceWhatsApp } from '../lib/contacto.js';
+// Página de un trabajo con caso completo.
+const { lang, trabajo: w } = Astro.props;
+const otra = lang === 'es' ? 'en' : 'es';
+const todo = usarTextos(lang), t = todo.trabajos;
+---
+<Base lang={lang} titulo={`${w.nombre} · ${todo.sitio.nombre}`} descripcion={w.resumen[lang]} rutaAlterna={rutaLocal(otra, `/trabajos/${w.slug}/`)}>
+  <main id="contenido">
+    <article class="franja" data-color="cobalto">
+      <a class="volver rotulo" data-volver href={`${rutaLocal(lang, '/')}#trabajos`}><span aria-hidden="true">←</span> {t.volver}</a>
+      <p class="rotulo ficha"><span>{w.tipo[lang]}</span><span>{w.anio}</span>{w.enConstruccion && <span class="marca-texto">{t.construccion}</span>}</p>
+      <h1>{w.nombre}</h1>
+      <p class="entrada">{w.resumen[lang]}</p>
+
+      <div class="bloques">
+        <section><h2 class="rotulo">{t.necesidad}</h2><p>{w.necesidad[lang]}</p></section>
+        <section><h2 class="rotulo">{t.hecho}</h2><ul role="list">{w.hecho[lang].map(x => <li>{x}</li>)}</ul></section>
+        <section><h2 class="rotulo">{t.con}</h2><p class="con">{w.con}</p></section>
+      </div>
+
+      {w.captura && (
+        <div class="capturas">
+          <div class="encuadre"><img src={`/img/trabajos/${w.slug}.webp`} alt={`${t.capturaDe} ${w.nombre}`} width="1200" height="750" fetchpriority="high" /></div>
+          <div class="encuadre movil"><img src={`/img/trabajos/${w.slug}-movil.webp`} alt={`${t.capturaDe} ${w.nombre} (${lang === 'es' ? 'celular' : 'mobile'})`} width="480" height="1039" loading="lazy" decoding="async" /></div>
+        </div>
+      )}
+
+      <p class="acciones">
+        <a class="boton" href={enlaceWhatsApp(todo.sitio.whatsapp)} rel="noopener">{todo.portada.boton} <span aria-hidden="true">→</span></a>
+        {w.url && <a class="boton-linea" href={w.url} rel="noopener">{t.sitio} <span aria-hidden="true">↗</span></a>}
+      </p>
+    </article>
+  </main>
+</Base>
+
+<style>
+  .volver { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; margin-bottom: 1.5rem; }
+  h1 { font-size: clamp(2.8rem, 1rem + 9vw, 7rem); font-weight: 800; font-stretch: 78%; line-height: .9; letter-spacing: -.03em; text-wrap: balance; margin-bottom: 1.5rem; }
+  .bloques { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 0 2.5rem; margin-top: clamp(2rem, 5vw, 4rem); }
+  .bloques section { border-top: 1.5px solid; padding: 1rem 0 2rem; }
+  .bloques h2 { color: var(--acento); margin-bottom: .7rem; }
+  .bloques ul { display: grid; gap: .4rem; }
+  .bloques li { padding-left: 1.1em; position: relative; }
+  .bloques li::before { content: "+"; position: absolute; left: 0; font-family: var(--f-mono); color: var(--acento); }
+  .con { font-family: var(--f-mono); font-size: .9rem; line-height: 1.7; }
+  .capturas { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); gap: clamp(1rem, 3vw, 2.5rem); align-items: start; margin-top: 1rem; }
+  .capturas img { width: 100%; }
+  .acciones { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; margin-top: clamp(2rem, 5vw, 4rem); font-weight: 700; }
+  @media (max-width: 47.99rem) {
+    .capturas { grid-template-columns: minmax(0, 1fr); }
+    .capturas .movil { max-width: 14rem; }
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import { usarTextos } from '../i18n/textos.js';
+const t = usarTextos(Astro.props.lang).protocolo;
+const colores = ['cobalto', 'tinta', 'lila', 'lima'];
+---
+<section id="protocolo" class="franja" data-color="coral">
+  <p class="rotulo ficha"><span>{t.ficha}</span><span>01 → 0{t.pasos.length}</span></p>
+  <h2 class="titulo-seccion">{t.titulo}</h2>
+  <ol role="list">
+    {t.pasos.map(([nombre, detalle, foto], i) => (
+      <li data-paso data-color={colores[i % 4]}>
+        <img src={`/img/protocolo/paso-${i + 1}.webp`} alt={foto} width="900" height="600" loading="lazy" decoding="async" />
+        <div class="texto">
+          <span class="num" aria-hidden="true">0{i + 1}</span>
+          <h3>{nombre}</h3>
+          <p>{detalle}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  /* Mosaico: todo el proceso a la vista, tres pasos arriba y cuatro abajo. */
+  ol { margin-top: clamp(1.5rem, 4vw, 3rem); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(.8rem, 1.6vw, 1.3rem); }
+  li { grid-column: span 3; display: grid; gap: .9rem; align-content: start; padding: 1rem; border-radius: var(--radio); background: var(--fondo); color: var(--texto); }
+  li:nth-child(-n+3) { grid-column: span 4; }
+  img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: .7rem; }
+  .texto { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .3rem .9rem; align-items: start; padding: 0 .2rem .3rem; }
+  .texto p { grid-column: 2; }
+  .num { font-size: clamp(2.6rem, 2rem + 2vw, 4rem); font-weight: 800; font-stretch: 75%; line-height: .8; letter-spacing: -.04em; color: var(--acento); }
+  h3 { font-size: clamp(1.3rem, 1.1rem + .8vw, 1.8rem); line-height: 1.05; letter-spacing: -.02em; font-weight: 800; font-stretch: 85%; text-wrap: balance; }
+  @media (max-width: 61.99rem) {
+    li, li:nth-child(-n+3) { grid-column: span 6; }
+    li:last-child { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+  }
+  @media (max-width: 39.99rem) {
+    li, li:nth-child(-n+3), li:last-child { grid-column: 1 / -1; grid-template-columns: 34% minmax(0, 1fr); align-items: center; }
+    img { aspect-ratio: 1; }
+    .texto { grid-template-columns: minmax(0, 1fr); }
+    .texto p { grid-column: 1; }
+  }
+</style>

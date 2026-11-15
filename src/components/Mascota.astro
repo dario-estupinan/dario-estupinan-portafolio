@@ -1,0 +1,43 @@
+---
+import { usarTextos } from '../i18n/textos.js';
+import fija from '../data/mascota-fija.json';
+// tamano: 'portada' lleva rótulo y botón para cambiarla; 'chica' es solo el dibujo.
+const { lang, tamano = 'portada', gesto = '' } = Astro.props;
+const t = usarTextos(lang).mascota;
+---
+<div class="masc" data-mascota data-tamano={tamano} data-gesto={gesto} data-nombres={JSON.stringify(t.nombres)} data-etiqueta={t.etiqueta}>
+  <i class="cruz c1"></i><i class="cruz c2"></i><i class="cruz c3"></i><i class="cruz c4"></i>
+  <div class="lienzo" role="img" aria-label={`${t.etiqueta}: ${t.nombres.datos}`}>
+    <pre aria-hidden="true">{fija.tinta}</pre><pre class="a" aria-hidden="true">{fija.acento}</pre>
+  </div>
+  {tamano === 'portada' && (
+    <p class="pie rotulo">
+      <span data-rotulo>Fig. 01 — {t.nombres.datos}</span>
+      <button type="button" class="boton-linea" data-cambiar hidden>{t.cambiar}</button>
+    </p>
+  )}
+</div>
+
+<script>
+  import { montarMascota } from '../scripts/mascota.js';
+  for (const raiz of document.querySelectorAll('[data-mascota]')) {
+    raiz.querySelector('[data-cambiar]')?.removeAttribute('hidden');   // sin JavaScript el botón no aparece
+    montarMascota(raiz);
+  }
+</script>
+
+<style>
+  .masc { container-type: inline-size; position: relative; padding-top: 1.2rem; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+  .masc[data-tamano="chica"] { padding: .9rem; }
+  .cruz { position: absolute; width: 14px; height: 14px; }
+  .cruz::before, .cruz::after { content: ""; position: absolute; background: currentColor; }
+  .cruz::before { inset: 6px 0; }
+  .cruz::after { inset: 0 6px; }
+  .c1 { top: 0; left: 0; } .c2 { top: 0; right: 0; } .c3 { bottom: 0; left: 0; } .c4 { bottom: 0; right: 0; }
+  .lienzo { position: relative; aspect-ratio: 100 / 62; overflow: hidden; cursor: pointer; }
+  /* Tamaño de partida sin JavaScript: 84 columnas × 0,6 em caben en el ancho del marco. */
+  pre { position: absolute; inset: 0; margin: 0; font-family: var(--f-mono); font-weight: 700; font-size: calc(100cqw / 52); line-height: 1; white-space: pre; transform-origin: 0 0; pointer-events: none; color: var(--texto); }
+  pre.a { color: var(--acento); }
+  .pie { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 2.75rem; padding: .4rem 1.6rem 0; }
+  .pie button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; }
+</style>

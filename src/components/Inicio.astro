@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Portada from './Portada.astro';
+import Servicios from './Servicios.astro';
+import PresenciaIA from './PresenciaIA.astro';
+import Trabajos from './Trabajos.astro';
+import Datos from './Datos.astro';
+import Protocolo from './Protocolo.astro';
+import SobreMi from './SobreMi.astro';
+import Preguntas from './Preguntas.astro';
+import Contacto from './Contacto.astro';
+import { usarTextos, rutaLocal } from '../i18n/textos.js';
+import { CORREO, TELEFONO, LINKEDIN, GITHUB } from '../lib/contacto.js';
+const { lang } = Astro.props;
+const otra = lang === 'es' ? 'en' : 'es';
+const t = usarTextos(lang);
+const capturas = ['npc-guayaquil', 'maple-tree', 'dra-lorena-martinez'].map((slug, i) => ({
+  src: `/img/cinta-${slug}.webp`,
+  alt: `${t.trabajos.capturaDe} ${['NPC Guayaquil Muscle Show', 'Maple Tree', 'Dra. Lorena Martínez'][i]}`,
+}));
+const sitio = Astro.site.href, aqui = new URL(rutaLocal(lang, '/'), sitio).href;
+// Datos estructurados: quién es, qué ofrece y las mismas preguntas frecuentes que se leen en la página.
+const datos = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Person', '@id': `${sitio}#dario`, name: t.sitio.nombre, jobTitle: lang === 'es' ? 'Desarrollador de software' : 'Software developer', url: aqui,
+      image: new URL('/img/dario-duotono.webp', sitio).href, email: `mailto:${CORREO}`, telephone: `+${TELEFONO}`, sameAs: [LINKEDIN, GITHUB],
+      address: { '@type': 'PostalAddress', addressLocality: 'Guayaquil', addressCountry: 'EC' } },
+    { '@type': 'ProfessionalService', '@id': `${sitio}#servicio`, name: t.sitio.nombre, description: t.sitio.descripcion, url: aqui, inLanguage: lang,
+      founder: { '@id': `${sitio}#dario` }, email: `mailto:${CORREO}`, telephone: `+${TELEFONO}`, areaServed: 'EC',
+      address: { '@type': 'PostalAddress', addressLocality: 'Guayaquil', addressCountry: 'EC' },
+      hasOfferCatalog: { '@type': 'OfferCatalog', name: t.servicios.palabra, itemListElement: t.servicios.items.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.nombre, description: s.desc } })) } },
+    { '@type': 'FAQPage', '@id': `${aqui}#preguntas`, inLanguage: lang,
+      mainEntity: t.preguntas.lista.map(([p, r]) => ({ '@type': 'Question', name: p, acceptedAnswer: { '@type': 'Answer', text: r } })) },
+  ],
+};
+---
+<Base lang={lang} rutaAlterna={rutaLocal(otra, '/')}>
+  <script slot="cabeza" type="application/ld+json" is:inline set:html={JSON.stringify(datos)} />
+  <main id="contenido">
+    <Portada lang={lang} capturas={capturas} />
+    <Servicios lang={lang} />
+    <PresenciaIA lang={lang} />
+    <Trabajos lang={lang} />
+    <Datos lang={lang} />
+    <Protocolo lang={lang} />
+    <SobreMi lang={lang} />
+    <Preguntas lang={lang} />
+    <Contacto lang={lang} />
+  </main>
+</Base>

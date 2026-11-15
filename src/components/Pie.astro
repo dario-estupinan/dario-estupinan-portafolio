@@ -1,0 +1,18 @@
+---
+import { usarTextos } from '../i18n/textos.js';
+const { lang, rutaAlterna } = Astro.props;
+const t = usarTextos(lang);
+---
+<footer data-color="tinta">
+  <p class="rotulo">{t.pie.derechos}</p>
+  <p class="enlaces rotulo">
+    <a href={rutaAlterna} lang={lang === 'es' ? 'en' : 'es'}>{t.sitio.otraLengua}</a>
+    <a href="#contenido">{t.pie.arriba} <span aria-hidden="true">↑</span></a>
+  </p>
+</footer>
+
+<style>
+  footer { background: var(--fondo); color: var(--texto); padding: 1rem var(--borde-pagina) calc(1rem + env(safe-area-inset-bottom)); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 2rem; border-top: 1.5px solid color-mix(in srgb, var(--texto) 25%, transparent); }
+  .enlaces { display: flex; gap: 1.5rem; }
+  a { display: inline-flex; align-items: center; min-height: 2.75rem; min-width: 2.75rem; }
+</style>

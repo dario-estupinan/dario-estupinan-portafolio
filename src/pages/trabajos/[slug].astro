@@ -1,0 +1,6 @@
+---
+import Caso from '../../components/Caso.astro';
+import { casos } from '../../data/trabajos.js';
+export const getStaticPaths = () => casos.map(trabajo => ({ params: { slug: trabajo.slug }, props: { trabajo } }));
+---
+<Caso lang="es" trabajo={Astro.props.trabajo} />
