@@ -7,12 +7,12 @@ const t = usarTextos(lang).mascota;
 ---
 <div class="masc" data-mascota data-tamano={tamano} data-gesto={gesto} data-nombres={JSON.stringify(t.nombres)} data-etiqueta={t.etiqueta}>
   <i class="cruz c1"></i><i class="cruz c2"></i><i class="cruz c3"></i><i class="cruz c4"></i>
-  <div class="lienzo" role="img" aria-label={`${t.etiqueta}: ${t.nombres.datos}`}>
+  <div class="lienzo" role="img" aria-label={`${t.etiqueta}: ${t.nombres.ojo}`}>
     <pre aria-hidden="true">{fija.tinta}</pre><pre class="a" aria-hidden="true">{fija.acento}</pre>
   </div>
   {tamano === 'portada' && (
     <p class="pie rotulo">
-      <span data-rotulo>Fig. 01 — {t.nombres.datos}</span>
+      <span data-rotulo>Fig. 01 — {t.nombres.ojo}</span>
       <button type="button" class="boton-linea" data-cambiar hidden>{t.cambiar}</button>
     </p>
   )}

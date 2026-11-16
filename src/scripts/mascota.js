@@ -1,7 +1,7 @@
 // Mascota hecha de letras. Se dibuja en un lienzo oculto de 84×31 píxeles (uno por letra)
 // y cada píxel se convierte en un carácter. Canal rojo = densidad; canal verde = capa de acento.
 
-export const COLS = 84, FILAS = 31, NOMBRES = ['datos', 'gato', 'ojo'];
+export const COLS = 84, FILAS = 31, NOMBRES = ['ojo', 'datos', 'gato'];   // la primera es la de partida
 const W = 100, H = 62, RAMPA = ' .:=+*#@', CLAVE = 'mascota';
 
 export function aLetras(pixeles, cols, filas) {
@@ -75,6 +75,7 @@ function dibujos(g) {
     },
 
     ojo(s) {
+      g.translate(50, 34); g.scale(0.9, 0.9); g.translate(-50, -31);   // deja sitio arriba: las pestañas se salían del lienzo
       const k = 37 * Math.max(0.03, s.ab);
       const almendra = () => { g.beginPath(); g.moveTo(4, 31); g.quadraticCurveTo(50, 31 - k * 1.7, 96, 31); g.quadraticCurveTo(50, 31 + k * 1.55, 4, 31); g.closePath(); };
       g.strokeStyle = tin(1); g.lineWidth = 1.8; g.lineCap = 'round';
@@ -112,7 +113,7 @@ export function montarMascota(raiz) {
   const rotulo = raiz.querySelector('[data-rotulo]'), boton = raiz.querySelector('[data-cambiar]');
   const nombres = JSON.parse(raiz.dataset.nombres);            // { datos: 'Ing. de datos', … } ya traducidos
   const motor = crearMotor(), s = { x: 0, y: 0, ab: 1, t: 0, imp: 0, gesto: raiz.dataset.gesto || '' };
-  let cual = NOMBRES.includes(leer()) ? leer() : 'datos', tx = 0, ty = 0, cierra = 0, ultimo = -1e9, visible = true, cuadro = 0, vivo = true;
+  let cual = NOMBRES.includes(leer()) ? leer() : NOMBRES[0], tx = 0, ty = 0, cierra = 0, ultimo = -1e9, visible = true, cuadro = 0, vivo = true;
 
   const rotula = () => {
     const n = String(NOMBRES.indexOf(cual) + 1).padStart(2, '0');
@@ -128,8 +129,10 @@ export function montarMascota(raiz) {
     const m = document.createElement('span'); m.textContent = '0'.repeat(COLS);
     m.style.cssText = `position:absolute;visibility:hidden;white-space:pre;font:700 ${px}px/1 ${getComputedStyle(tinta).fontFamily}`;
     document.body.append(m);
-    const k = Math.min(marco.clientWidth / m.getBoundingClientRect().width, marco.clientHeight / (FILAS * px)); m.remove();
-    for (const e of [tinta, acento]) { e.style.fontSize = px + 'px'; e.style.transform = `scale(${k})`; }
+    const ancho = m.getBoundingClientRect().width, k = Math.min(marco.clientWidth / ancho, marco.clientHeight / (FILAS * px)); m.remove();
+    // Centrado: el bloque de letras rara vez llena el marco en las dos direcciones.
+    const dx = (marco.clientWidth - ancho * k) / 2, dy = (marco.clientHeight - FILAS * px * k) / 2;
+    for (const e of [tinta, acento]) { e.style.fontSize = px + 'px'; e.style.transform = `translate(${dx}px, ${dy}px) scale(${k})`; }
   };
 
   const alMover = e => {

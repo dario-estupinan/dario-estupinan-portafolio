@@ -1,4 +1,4 @@
-// Genera src/data/mascota-fija.json: el dibujo quieto del ingeniero que se ve antes de que cargue
+// Genera src/data/mascota-fija.json: el dibujo quieto de la mascota de partida (el ojo) que se ve antes de que cargue
 // el JavaScript (o sin él). Uso: npm run build && npm run preview (en otra terminal) && node scripts/mascota-fija.mjs
 import { chromium } from '@playwright/test';
 import { writeFileSync } from 'node:fs';

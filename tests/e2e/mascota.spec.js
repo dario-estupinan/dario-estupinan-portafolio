@@ -10,10 +10,13 @@ for (const ancho of [1440, 390, 360]) {
     const sobra = await page.evaluate(() => {
       const pre = document.querySelector('[data-mascota] pre'), r = document.createRange(); r.selectNodeContents(pre);
       const t = r.getBoundingClientRect(), m = pre.parentElement.getBoundingClientRect();
-      return [t.right - m.right, t.bottom - m.bottom];
+      return [t.right - m.right, t.bottom - m.bottom, (t.left - m.left) - (m.right - t.right), (t.top - m.top) - (m.bottom - t.bottom)];
     });
     expect(sobra[0]).toBeLessThanOrEqual(1);
     expect(sobra[1]).toBeLessThanOrEqual(1);
+    // centrado en el marco: mismo margen a cada lado y arriba que abajo
+    expect(Math.abs(sobra[2])).toBeLessThanOrEqual(2);
+    expect(Math.abs(sobra[3])).toBeLessThanOrEqual(2);
     await sinDesborde(page);
   });
 }
