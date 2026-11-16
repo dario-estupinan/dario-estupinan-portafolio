@@ -49,7 +49,7 @@ test('trabajos: tres casos grandes con sus dos capturas y seis tarjetas, sin des
   const page = await (await browser.newContext({ hasTouch: true, viewport: { width: 390, height: 800 } })).newPage();
   await page.addInitScript(() => sessionStorage.setItem('bienvenida-vista', '1'));
   await page.goto('/');
-  await expect(page.locator('#trabajos [data-trabajos] > li')).toHaveCount(9);
+  await expect(page.locator('#trabajos [data-trabajos] > li:not(.corte)')).toHaveCount(9);
   const grandes = page.locator('#trabajos .destacado');
   await expect(grandes).toHaveCount(3);
   for (const img of await grandes.locator('img').all()) await expect(img).toHaveAttribute('alt', /.+/);
@@ -154,4 +154,27 @@ test('presencia en IA: con movimiento reducido el asistente cambia de caso al in
   await expect(fig.locator('[data-respuesta]')).toHaveText(/Horno Lento/);
   await fig.locator('[data-ver="sin"]').click();
   await expect(fig.locator('[data-respuesta]')).toHaveText(/^No encuentro/, { timeout: 500 });
+});
+
+test('«Hablemos» está a la vista en celular y lleva a Contacto, donde llega el fénix', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 700 });
+  await page.goto('/');
+  const boton = page.locator('header[data-nav] .hablar'), lienzo = page.locator('#contacto canvas');
+  await expect(boton).toBeInViewport();
+  await boton.click();
+  await expect(lienzo).toBeInViewport();
+  // El ave se pintó: hay puntos en el lienzo.
+  await expect.poll(() => lienzo.evaluate(c => c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some(v => v))).toBe(true);
+  await sinDesborde(page);
+});
+
+test('los trabajos se revelan al entrar en pantalla y sin animación están a la vista desde el principio', async ({ page, browser }) => {
+  await page.goto('/');
+  const ultima = page.locator('#trabajos .tarjeta').last();
+  await expect(ultima).toHaveCSS('opacity', '0');
+  await ultima.scrollIntoViewIfNeeded();
+  await expect(ultima).toHaveCSS('opacity', '1');
+  const quieta = await (await browser.newContext({ reducedMotion: 'reduce' })).newPage();
+  await quieta.goto('/');
+  await expect(quieta.locator('#trabajos .tarjeta').last()).toHaveCSS('opacity', '1');
 });

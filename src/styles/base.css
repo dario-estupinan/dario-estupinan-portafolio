@@ -34,3 +34,25 @@ button { font: inherit; color: inherit; }
 .encuadre::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
 .encuadre::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
 .pildora { display: inline-flex; align-items: center; background: var(--acento); color: var(--sobre); border-radius: 99rem; padding: .5rem .9rem; font: 700 .7rem/1.2 var(--f-mono); letter-spacing: .05em; text-transform: uppercase; }
+
+/* Paso entre secciones del inicio (estructura de smart-airport-systems.com: la sección que entra tapa a la que se va).
+   Cada sección sube como una hoja de esquinas redondeadas sobre la anterior, que se queda atrás, más lenta y oscureciéndose;
+   la ficha y el título de la que entra suben mientras cruza el borde. Todo va atado al scroll.
+   Solo con animación activa (html[data-animar], ver /bienvenida-pre.js) y donde el navegador lo admite: si no, la página queda como estaba. */
+@supports (animation-timeline: view()) {
+  /* «~» y «last-of-type» porque entre secciones hay etiquetas <script>. */
+  html[data-animar] main > section { position: relative; }
+  html[data-animar] main > section ~ section { border-radius: 2rem 2rem 0 0; overflow: clip; }
+  /* La última no se queda atrás: debajo solo viene el pie. */
+  html[data-animar] main > section:not(:last-of-type) { animation: se-queda linear both; }
+  /* Se apaga con un velo propio y no con opacidad: transparente dejaría ver la sección de más atrás. */
+  html[data-animar] main > section:not(:last-of-type)::after { content: ""; position: absolute; inset: 0; z-index: 5; background: var(--tinta); opacity: 0; pointer-events: none; animation: se-apaga linear both; }
+  html[data-animar] main > section ~ section :is(.ficha, h2) { animation: sube-titulo linear both; }
+  /* La línea de tiempo va en reglas aparte: en la misma regla el minificador la mete en la abreviatura «animation» y el navegador la descarta.
+     «se-queda» empieza cuando el final de la sección cruza la mitad de la pantalla: antes, todo su contenido ya pudo verse y tocarse en el centro. */
+  html[data-animar] main > :not(:last-of-type):is(section), html[data-animar] main > :not(:last-of-type):is(section)::after { animation-timeline: view(); animation-range: cover calc(100% - 50vh) cover 100%; }
+  html[data-animar] main > section ~ section :is(h2, .ficha) { animation-timeline: view(); animation-range: entry 0% entry 100%; }
+  @keyframes se-queda { to { translate: 0 40vh; } }
+  @keyframes se-apaga { to { opacity: .7; } }
+  @keyframes sube-titulo { from { translate: 0 5rem; opacity: 0; } }
+}

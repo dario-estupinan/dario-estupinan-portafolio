@@ -1,0 +1,20 @@
+---
+// Lista de canales de contacto: la usan la sección #contacto y el diálogo «Hablemos».
+import { usarTextos } from '../i18n/textos.js';
+import { enlaceWhatsApp, CORREO, TELEFONO_VISIBLE, LINKEDIN, GITHUB } from '../lib/contacto.js';
+const todo = usarTextos(Astro.props.lang);
+---
+<ul role="list">
+  <li><span class="rotulo">WhatsApp</span><a href={enlaceWhatsApp(todo.sitio.whatsapp)} rel="noopener">{TELEFONO_VISIBLE}</a></li>
+  <li><span class="rotulo">{todo.contacto.correo}</span><a href={`mailto:${CORREO}`}>{CORREO}</a></li>
+  <li><span class="rotulo">LinkedIn</span><a href={LINKEDIN} rel="noopener">linkedin.com/in/dario-estupinan</a></li>
+  <li><span class="rotulo">GitHub</span><a href={GITHUB} rel="noopener">github.com/dario-estupinan</a></li>
+</ul>
+
+<style>
+  ul { margin-top: 2.2rem; border-top: 1.5px solid; max-width: 40rem; }
+  li { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 1rem; align-items: center; border-bottom: 1.5px solid; }
+  li a { display: flex; align-items: center; min-height: 2.9rem; font-weight: 700; text-decoration: none; overflow-wrap: anywhere; }
+  li a:hover { text-decoration: underline; text-underline-offset: .25em; }
+  @media (max-width: 47.99rem) { li { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: .5rem; } }
+</style>

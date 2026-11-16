@@ -47,21 +47,22 @@ const ancla = id => (enInicio ? `#${id}` : `${inicio}#${id}`);
 <style>
   .nav { position: sticky; top: 0; z-index: 20; background: var(--fondo); color: var(--texto); border-bottom: 1.5px solid color-mix(in srgb, var(--texto) 25%, transparent); }
   .fila { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: var(--alto-nav); padding: 0 var(--borde-pagina); }
-  .marca { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 800; font-stretch: 100%; letter-spacing: .01em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+  .marca { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 800; font-stretch: 100%; letter-spacing: .01em; text-transform: uppercase; text-decoration: none; line-height: 1; }   /* sin sitio (celular angosto, letra grande) el nombre pasa a dos renglones */
   .enlaces { display: none; gap: clamp(.2rem, 1.2vw, 1.2rem); }
   .enlaces a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 .55rem; text-decoration: none; font-weight: 600; white-space: nowrap; }
   .enlaces a:hover { text-decoration: underline; text-underline-offset: .3em; }
   .enlaces a[aria-current] { background: var(--acento); color: var(--sobre); }
-  .lado { display: flex; align-items: center; gap: .5rem; }
-  .idioma { display: inline-grid; place-items: center; min-width: 2.75rem; min-height: 2.75rem; border: 1.5px solid; text-decoration: none; font-weight: 700; }
-  .hablar { display: none; align-items: center; min-height: 2.75rem; padding: 0 1rem; background: var(--acento); color: var(--sobre); font-weight: 800; text-decoration: none; white-space: nowrap; }
+  .lado { flex: none; display: flex; align-items: center; gap: .5rem; }
+  /* En celular el idioma vive en el menú: su sitio en la barra lo ocupa «Hablemos», siempre a la vista. */
+  .idioma { display: none; place-items: center; min-width: 2.75rem; min-height: 2.75rem; border: 1.5px solid; text-decoration: none; font-weight: 700; }
+  .hablar { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 1rem; background: var(--acento); color: var(--sobre); font-weight: 800; text-decoration: none; white-space: nowrap; }
   .abrir { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; background: none; border: 0; cursor: pointer; }
   .rayas, .rayas::after { display: block; width: 1.6rem; height: 2px; background: currentColor; }
   .rayas { translate: 0 -4px; }
   .rayas::after { content: ""; translate: 0 8px; }
   @media (min-width: 62rem) {
     .enlaces { display: flex; }
-    .hablar { display: inline-flex; }
+    .idioma { display: inline-grid; }
     .abrir { display: none; }
   }
 

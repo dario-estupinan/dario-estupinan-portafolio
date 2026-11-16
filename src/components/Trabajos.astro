@@ -19,7 +19,7 @@ const alto = w => (w.slug === 'mesura' ? 509 : 750);
 
   <ol role="list" data-trabajos>
     {grandes.map((w, i) => (
-      <li class="destacado">
+      <li class="destacado" data-revela>
         <div class="marco" data-color={colores[i % 4]}>
           <div class="ventana"><img src={`/img/trabajos/${w.slug}.webp`} alt={`${t.capturaDe} ${w.nombre}`} width="1200" height={alto(w)} loading="lazy" decoding="async" /></div>
           <img class="movil" src={`/img/trabajos/${w.slug}-movil.webp`} alt={`${t.capturaDe} ${w.nombre} ${t.movil}`} width="480" height="1039" loading="lazy" decoding="async" />
@@ -37,8 +37,9 @@ const alto = w => (w.slug === 'mesura' ? 509 : 750);
         </div>
       </li>
     ))}
+    <li class="corte rotulo" data-revela><span>{t.mas}</span><span>{String(resto.length).padStart(2, '0')}</span></li>
     {resto.map((w, i) => (
-      <li class="tarjeta" data-color={colores[(i + grandes.length) % 4]}>
+      <li class="tarjeta" data-revela data-color={colores[(i + grandes.length) % 4]}>
         {w.captura
           ? <div class="ventana"><img src={`/img/trabajos/${w.slug}.webp`} alt={`${t.capturaDe} ${w.nombre}`} width="1200" height={alto(w)} loading="lazy" decoding="async" /></div>
           : <p class="sin-captura" aria-hidden="true">{w.nombre}</p>}
@@ -56,6 +57,16 @@ const alto = w => (w.slug === 'mesura' ? 509 : 750);
     ))}
   </ol>
 </section>
+
+<script>
+  // Cada trabajo se revela al entrar en pantalla; los que entran juntos (una fila de tarjetas) salen en cascada.
+  if (document.documentElement.hasAttribute('data-animar')) {
+    const mira = new IntersectionObserver(entradas => {
+      entradas.filter(e => e.isIntersecting).forEach((e, i) => { mira.unobserve(e.target); setTimeout(() => e.target.setAttribute('data-visto', ''), i * 110); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('[data-revela]').forEach(e => mira.observe(e));
+  }
+</script>
 
 <style>
   header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: clamp(2rem, 5vw, 4rem); }
@@ -75,11 +86,28 @@ const alto = w => (w.slug === 'mesura' ? 509 : 750);
   .hecho { display: grid; gap: .35rem; }
   .hecho li::before { content: "✦ "; color: var(--acento); }
   .enlaces { display: flex; flex-wrap: wrap; gap: .6rem; }
+  /* Corte entre los casos grandes y las tarjetas: una línea que se traza y el rótulo del segundo grupo. */
+  .corte { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 1rem; padding-top: .8rem; background: linear-gradient(currentColor, currentColor) top left / 100% 1.5px no-repeat; }
   .tarjeta { grid-column: span 2; display: grid; grid-template-rows: auto 1fr; gap: 1rem; padding: 1.1rem; border-radius: var(--radio); background: var(--fondo); color: var(--texto); }
   .tarjeta .datos { grid-template-rows: auto auto 1fr auto; }
   .tarjeta h3 { font-size: 1.7rem; }
   .tarjeta .boton { background: var(--acento); color: var(--sobre); }
   .sin-captura { aspect-ratio: 8 / 5; display: grid; place-items: center; padding: 1rem; border: 1.5px solid; border-radius: .6rem; text-align: center; font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 800; font-stretch: 75%; text-transform: uppercase; line-height: .85; color: transparent; -webkit-text-stroke: 1.5px var(--acento); }
+  /* Revelado (solo con animación activa: sin JavaScript o con movimiento reducido todo está a la vista).
+     Destacados: el marco de color se destapa desde su lado, la captura de celular cae después y los datos suben uno a uno.
+     Tarjetas: suben y crecen. */
+  :global(html[data-animar]) .marco { clip-path: inset(-15%); transition: clip-path .9s cubic-bezier(.7, 0, .2, 1); }
+  :global(html[data-animar]) :is(.movil, .tarjeta, .destacado .datos > *) { transition: opacity .6s, translate .7s cubic-bezier(.2, .7, .2, 1), rotate .7s cubic-bezier(.2, .7, .2, 1), scale .7s cubic-bezier(.2, .7, .2, 1); }
+  :global(html[data-animar]) .movil { transition-delay: .55s; }
+  :global(html[data-animar]) .destacado .datos > * { transition-delay: calc(.25s + var(--i, 0) * 80ms); }
+  .datos > :nth-child(2) { --i: 1; } .datos > :nth-child(3) { --i: 2; } .datos > :nth-child(4) { --i: 3; } .datos > :nth-child(5) { --i: 4; } .datos > :nth-child(6) { --i: 5; }
+  :global(html[data-animar]) .destacado:not([data-visto]) .marco { clip-path: inset(-15% 115% -15% -15%); }
+  :global(html[data-animar]) .destacado:nth-child(even):not([data-visto]) .marco { clip-path: inset(-15% -15% -15% 115%); }
+  :global(html[data-animar]) .destacado:not([data-visto]) .movil { opacity: 0; translate: 0 -5rem; rotate: 18deg; }
+  :global(html[data-animar]) .destacado:not([data-visto]) .datos > * { opacity: 0; translate: 0 2rem; }
+  :global(html[data-animar]) .corte { transition: background-size 1s cubic-bezier(.7, 0, .2, 1), color .6s .4s; }
+  :global(html[data-animar]) .corte:not([data-visto]) { background-size: 0 1.5px; color: transparent; }
+  :global(html[data-animar]) .tarjeta:not([data-visto]) { opacity: 0; translate: 0 5rem; scale: .9; }
   @media (max-width: 61.99rem) { .tarjeta { grid-column: span 3; } }
   @media (max-width: 43.99rem) {
     .destacado { grid-template-columns: minmax(0, 1fr); }

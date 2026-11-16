@@ -5,6 +5,8 @@
   --tinta: #0F1026;
   --coral: #FF7A66;
   --lima: #C9F26B;
+  /* Fuego del fénix, del rojo de las puntas al crema del pecho. Solo para sus puntos sobre tinta (contraste medido: 4,9 · 7,9 · 10,7 · 14,3 · 17,3). */
+  --fuego-1: #F0432A; --fuego-2: #FF8A1F; --fuego-3: #FFB627; --fuego-4: #FFE066; --fuego-5: #FFF6D6;
   --f-texto: "Bricolage Grotesque", system-ui, sans-serif;
   --f-mono: "Martian Mono", ui-monospace, monospace;
   --borde-pagina: clamp(1rem, 3vw, 2.5rem);
